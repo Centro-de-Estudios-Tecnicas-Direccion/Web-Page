@@ -19,11 +19,11 @@
 - [Extensiones Institucionales](#-extensiones-institucionales)
 - [Redec — Cátedra UNESCO](#-redec--cátedra-unesco)
 - [Blog Científico](#-blog-científico)
-- [Intranet](#-intranet)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
 - [Tecnologías](#-tecnologías)
 - [Instalación y Desarrollo](#-instalación-y-desarrollo)
 - [Despliegue](#-despliegue)
+- [Sistema de Identidad](#-sistema-de-identidad)
 - [Contribución](#-contribución)
 - [Contacto](#-contacto)
 - [Licencia](#-licencia)
@@ -168,26 +168,26 @@ El blog científico del CETED es un espacio de divulgación de investigaciones, 
 ## 📁 Estructura del Proyecto
 
 ```text
-ceted-uh/
-├── public/
-│   ├── index.html              # Página principal
-│   ├── servicios.html          # Cursos, maestrías, diplomados
-│   ├── claustro.html           # Profesores e investigadores
-│   ├── contactenos.html        # Información de contacto
-│   └── assets/
-│       ├── css/
-│       ├── js/
-│       ├── img/
-│       └── fonts/
-├── src/
-│   ├── components/             # Componentes reutilizables
-│   ├── pages/                  # Vistas de la aplicación
-│   ├── services/               # Lógica de negocio
-│   ├── utils/                  # Utilidades
-│   └── config/                 # Configuración
-├── README.md
-└── LICENSE
+Web-Page/
+├── docs/                       # Documentación del proyecto
+│   ├── Gestión del Proyecto CETED_Web.pdf   # Especificación de requisitos
+│   ├── README .pdf                           # Contenido institucional
+│   ├── Manual de identidad REDEC.pdf        # Referencia de método
+│   ├── IDENTIDAD.md                         # ● Sistema de identidad del CETED
+│   └── CETED.png                              # Logotipo oficial
+├── frontend/                    # Aplicación web (React + TypeScript)
+│   ├── src/styles/         # ● Tokens y capa base del sistema de diseño
+│   ├── src/components/     # brand · layout · ui
+│   ├── src/features/home/  # Secciones y datos de la portada
+│   ├── src/lib/            # Cliente HTTP y caché de consultas
+│   ├── src/types/          # Contrato con la API
+│   └── src/pages/          # Una página por ruta
+├── legacy-prototype/            # Maquetación HTML/CSS inicial (referencia)
+└── docker/docker-compose.yml    # PostgreSQL y Adminer
 ```
+
+La arquitectura y el diseño están detalhados en
+[`frontend/README.md`](frontend/README.md) y [`docs/IDENTIDAD.md`](docs/IDENTIDAD.md).
 
 ---
 
@@ -195,10 +195,13 @@ ceted-uh/
 
 | Categoría | Tecnología |
 |-----------|------------|
-| **Frontend** | HTML5, CSS3, JavaScript (ES6+) |
-| **Framework** | Next.js |
-| **Backend** | Node.js |
-| **Base de Datos** |  MySQL |
+| **Frontend** | React 19, TypeScript, Vite 6 |
+| **Estilos** | Tailwind CSS 4, con tokens CSS como fuente de verdad |
+| **Enrutado** | React Router 7 |
+| **Datos** | TanStack Query 5 |
+| **Backend** | FastAPI *(pendiente)* |
+| **Base de Datos** | PostgreSQL 15 *(pendiente)* |
+| **Tipografías** | Archivo Variable y Figtree Variable, auto-alojadas |
 | **Control de Versiones** | Git y GitHub |
 
 ---
@@ -207,9 +210,10 @@ ceted-uh/
 
 ### Requisitos Previos
 
-- Node.js >= 18.0.0
-- npm >= 9.0.0 o yarn >= 1.22.0
+- Node.js >= 20.19
+- npm >= 10
 - Git
+- Python 3.11 y Docker (solo cuando exista el backend)
 
 ### Clonar el Repositorio
 
@@ -221,65 +225,73 @@ cd ceted-website
 ### Instalar Dependencias
 
 ```bash
+cd frontend
 npm install
-# o
-yarn install
 ```
 
 ### Configurar Variables de Entorno
 
 ```bash
 cp .env.example .env
-# Editar .env con las credenciales correspondientes
+# Editar .env con la URL de la API cuando exista
 ```
 
 ### Iniciar Servidor de Desarrollo
 
 ```bash
 npm run dev
-# o
-yarn dev
 ```
 
-La aplicación estará disponible en `http://localhost:3000`.
-
-### Ejecutar Pruebas
-
-```bash
-npm run test
-# o
-yarn test
-```
+La aplicación estará disponible en `http://localhost:5173`.
 
 ### Construir para Producción
 
 ```bash
 npm run build
-# o
-yarn build
 ```
+
+### Base de Datos
+
+```bash
+cd docker
+cp .env.example .env   # credenciales de PostgreSQL
+docker compose up -d
+```
+
+PostgreSQL queda en el puerto 5432 y Adminer, para inspeccionar la base de
+datos, en el 8080.
 
 ---
 
 ## 🌐 Despliegue
 
-### GitHub Pages
+`npm run build` genera el sitio estático en `frontend/dist/`. Sirve en
+cualquier hosting; si hay un backend, la API se publica aparte y se configura
+con `VITE_API_URL` en el momento de compilar.
 
 ```bash
-npm run deploy
+cd frontend
+VITE_API_URL=https://api.ceted.uh.cu npm run build
 ```
 
-### Vercel
+---
 
-```bash
-vercel --prod
-```
+## 🎨 Sistema de Identidad
 
-### Netlify
+La identidad visual del CETED está implementada como código, no descrita aparte:
 
-```bash
-netlify deploy --prod
-```
+- [`docs/IDENTIDAD.md`](docs/IDENTIDAD.md) — la guía de uso.
+- [`frontend/src/styles/tokens.css`](frontend/src/styles/tokens.css) — la fuente
+  de verdad: paleta, escala tipográfica, ritmo y formas.
+- [`frontend/src/styles/base.css`](frontend/src/styles/base.css) — los recursos
+  de marca: antetítulo, trama de decisión, vector y tratamiento fotográfico.
+
+El azul institucional `#004CA5` se extrajo del logotipo oficial. El trazado
+vectorial del logo se generó desde `docs/CETED.png` y se incrusta como
+componente React, de modo que hereda el color del texto y no necesita variantes.
+
+Regla práctica para el equipo: **ningún color ni tamaño se escribe suelto en
+un componente.** Si hace falta uno nuevo, se añade al token.
 
 ---
 

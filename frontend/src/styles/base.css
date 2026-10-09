@@ -1,0 +1,231 @@
+/* =============================================================================
+   CETED · CAPA BASE
+   Reinicio y ajustes de elemento. Solo lo que no puede expressse con utilities.
+   ========================================================================== */
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-tinta-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-tinta-0);
+    color: var(--color-tinta-900);
+    font-family: var(--font-texto);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visible y coherente en todo el sitio. */
+  :focus-visible {
+    outline: 2px solid var(--color-ceted-600);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Foco sobre superficies oscuras. */
+  .sobre-ceted-800 :focus-visible,
+  .sobre-ceted-900 :focus-visible,
+  .sobre-ceted-950 :focus-visible {
+    outline-color: var(--color-ceted-200);
+  }
+
+  ::selection {
+    background-color: var(--color-ceted-600);
+    color: var(--color-tinta-0);
+  }
+
+  /* Los numeros tabulares alinean las cifras en listas y datos. */
+  .cifras {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* =============================================================================
+   UTILIDADES DE MARCA
+   Las tres graficas de apoyo propias del CETED.
+   ========================================================================== */
+
+/* --- 0 · Ancho extendido del titular ---------------------------------------
+   La familia display tiene eje de ancho. Estirarla en cuerpos grandes es lo
+   que genera el impacto de los titulares; por debajo de ~34 px se mantiene el
+   ancho natural porque la version estrecha no garantiza legibilidad. */
+@utility font-estirado {
+  font-stretch: 112%;
+}
+
+@layer components {
+  /* --- 1 · Antetitulo ------------------------------------------------------
+     Antetitulo en versalitas precedido de una linea corta. Reemplaza al punto
+     o al bullet como recurso de entrada. */
+  .antetitulo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: var(--text-etiqueta);
+    font-weight: 600;
+    letter-spacing: var(--tracking-etiqueta);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .antetitulo::before {
+    content: '';
+    inline-size: 2.25rem;
+    block-size: 2px;
+    flex: none;
+    background-color: currentColor;
+    opacity: 0.45;
+  }
+
+  /* --- 2 · Trama "malla de decision" ---------------------------------------
+     Red de decision ortogonal: nodos cuadrados unidos por segmentos en angulo
+     recto. Representa el metodo del CETED —diagnosticar, decidir, ejecutar— y
+     funciona como textura de fondo a baja opacidad.
+     La retícula es apenas unceptible; lo que se lee es la red. */
+  .trama-malla {
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 8rem 8rem;
+  }
+
+  /* Segundo nivel de retícula, mas fino, para que la textura tenga escala. */
+  .trama-malla::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 2rem 2rem;
+    opacity: 0.35;
+  }
+
+  /* --- 3 · Vector direccional ----------------------------------------------
+     Chevron abierto dentro de un marco, girado 45 grados. Es la unidad minima
+     de navegacion: enlaces, listas y transiciones de seccion. */
+  .vector {
+    display: inline-block;
+    inline-size: 0.5em;
+    block-size: 0.5em;
+    flex: none;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    rotate: 45deg;
+    transition: translate 220ms var(--ease-marca);
+  }
+
+  /* --- 4 · Tratamiento fotográfico ------------------------------------------
+     Código fotográfico: toda imagen institucional se presenta en duotono azul,
+     nunca en color natural. El ajuste se hace en CSS para que el conjunto sea
+     coherente aunque las fotos lleguen de fuentes distintas.
+
+     · `.foto-marca`  → sobre superficies claras. Se neutraliza el color y se
+       multiplica, de modo que el azul del archivo tiñe el bloque.
+     · `.foto-oscuro` → sobre superficies de color profundo. Se invierte la
+       imagen para convertirla en una trama clara y se baja su opacidad: aparece
+       como fantasma de fondo y nunca compite con el texto. */
+  .foto-marca {
+    filter: grayscale(100%) contrast(1.08) brightness(0.97);
+    mix-blend-mode: multiply;
+  }
+
+  .foto-oscuro {
+    filter: grayscale(100%) invert(1) contrast(1.1) brightness(1.08);
+    opacity: 0.24;
+  }
+
+  /* --- 5 · Enlace con subrayado de marca ------------------------------------ */
+  .enlace-marca {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .enlace-marca::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -0.15em;
+    block-size: 1px;
+    background-color: currentColor;
+    scale: 0 1;
+    transform-origin: left;
+    transition: scale 260ms var(--ease-marca);
+  }
+
+  .enlace-marca:hover::after,
+  .enlace-marca:focus-visible::after {
+    scale: 1 1;
+  }
+
+  /* --- 6 · Etiqueta de rail lateral ------------------------------------------
+     Texto girado 90 grados en el margen, como los pliegos del manual. */
+  .rail-texto {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+    font-family: var(--font-display);
+    font-size: var(--text-etiqueta);
+    font-weight: 600;
+    letter-spacing: var(--tracking-etiqueta);
+    text-transform: uppercase;
+  }
+
+  /* --- 7 · Degradado de campo -----------------------------------------------
+     Unico uso autorizado del degradado: velar una fotografia institucional
+     para garantizar contraste con el texto. Nunca como color de marca. */
+  .velo-foto {
+    background: linear-gradient(
+      to top,
+      rgb(6 29 56 / 0.92) 0%,
+      rgb(6 29 56 / 0.55) 45%,
+      rgb(6 29 56 / 0.2) 100%
+    );
+  }
+}
+
+/* =============================================================================
+   MOVIMIENTO REDUCIDO
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
