@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/brand/ceted-logo.svg" />
-    <link rel="apple-touch-icon" href="/brand/ceted-logo.png" />
+    <!--
+      Las rutas que empiezan por %BASE_URL% las reescribe Vite con la ruta base
+      real en el momento de compilar. Asi el favicon funciona tanto en la raiz
+      como bajo un subdirectorio (GitHub Pages).
+    -->
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%brand/ceted-logo.svg" />
+    <link rel="apple-touch-icon" href="%BASE_URL%brand/ceted-logo.png" />
     <meta name="theme-color" content="#004CA5" />
 
     <title>
@@ -23,7 +28,7 @@
       property="og:description"
       content="Laboratorio de ideas para gestar desarrollo. Universidad de La Habana, Cuba."
     />
-    <meta property="og:image" content="/brand/ceted-logo.png" />
+    <meta property="og:image" content="%BASE_URL%brand/ceted-logo.png" />
     <meta name="twitter:card" content="summary" />
   </head>
   <body>

@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router'
 
 import { RutaPerezosa } from '@/app/RouteLoading'
 import { AppLayout } from '@/components/layout/AppLayout'
+import { BASE_URL } from '@/lib/assets'
 import { InicioPage } from '@/pages/InicioPage'
 
 /**
@@ -19,76 +20,83 @@ const ContactoPage = lazy(() => import('@/pages/ContactoPage'))
 const AccesoPage = lazy(() => import('@/pages/AccesoPage'))
 const NoEncontradaPage = lazy(() => import('@/pages/NoEncontradaPage'))
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <AppLayout />,
+      children: [
+        { index: true, element: <InicioPage /> },
+        {
+          path: 'servicios',
+          element: (
+            <RutaPerezosa>
+              <ServiciosPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'claustro',
+          element: (
+            <RutaPerezosa>
+              <ClaustroPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'noticias',
+          element: (
+            <RutaPerezosa>
+              <NoticiasPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'noticias/:slug',
+          element: (
+            <RutaPerezosa>
+              <NoticiasPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'proyectos',
+          element: (
+            <RutaPerezosa>
+              <ProyectosPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'contacto',
+          element: (
+            <RutaPerezosa>
+              <ContactoPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: 'acceso',
+          element: (
+            <RutaPerezosa>
+              <AccesoPage />
+            </RutaPerezosa>
+          ),
+        },
+        {
+          path: '*',
+          element: (
+            <RutaPerezosa>
+              <NoEncontradaPage />
+            </RutaPerezosa>
+          ),
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <AppLayout />,
-    children: [
-      { index: true, element: <InicioPage /> },
-      {
-        path: 'servicios',
-        element: (
-          <RutaPerezosa>
-            <ServiciosPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'claustro',
-        element: (
-          <RutaPerezosa>
-            <ClaustroPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'noticias',
-        element: (
-          <RutaPerezosa>
-            <NoticiasPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'noticias/:slug',
-        element: (
-          <RutaPerezosa>
-            <NoticiasPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'proyectos',
-        element: (
-          <RutaPerezosa>
-            <ProyectosPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'contacto',
-        element: (
-          <RutaPerezosa>
-            <ContactoPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: 'acceso',
-        element: (
-          <RutaPerezosa>
-            <AccesoPage />
-          </RutaPerezosa>
-        ),
-      },
-      {
-        path: '*',
-        element: (
-          <RutaPerezosa>
-            <NoEncontradaPage />
-          </RutaPerezosa>
-        ),
-      },
-    ],
+    // Necesario para servir bajo un subdirectorio (GitHub Pages). Sin esto,
+    // /Web-Page/servicios se interpretaria como la ruta raiz del sitio.
+    basename: BASE_URL,
   },
-])
+)

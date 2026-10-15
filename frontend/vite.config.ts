@@ -4,8 +4,21 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+/**
+ * Ruta base del sitio.
+ *
+ * En desarrollo es `/`. En GitHub Pages el sitio se publica bajo el nombre del
+ * repositorio (`/Web-Page/`), de modo que se pasa por variable de entorno:
+ *
+ *   VITE_BASE_PATH=/Web-Page/ npm run build
+ *
+ * Cuando exista un dominio propio, se compila con `VITE_BASE_PATH=/`.
+ */
+const base = process.env.VITE_BASE_PATH ?? '/'
+
 // https://vite.dev/config/
 export default defineConfig({
+  base,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

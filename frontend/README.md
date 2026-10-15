@@ -136,6 +136,72 @@ En desarrollo, Vite hace proxy de `/api` hacia `http://localhost:8000`
 
 ---
 
+## Despliegue en GitHub Pages
+
+El repositorio publica este frontend en GitHub Pages con GitHub Actions
+(`.github/workflows/deploy-pages.yml`). Cada `push` a `main` compila y publica.
+
+### Compilar como lo hace GitHub Pages
+
+```bash
+npm run build:pages
+npx vite preview
+```
+
+`build:pages` es `build` con `--base=/Web-Page/`, que es el subdirectorio donde
+GitHub Pages publica este repositorio.
+
+### Las cuatro piezas del subdirectorio
+
+Un sitio de una sola pagina servido desde un subdirectorio tiene cuatro puntos
+que se rompen con facilidad. Los cuatro estan resueltos:
+
+1. **`base` de Vite** (`vite.config.ts`). Reescribe las referencias a los
+   assets del HTML compilado: `/assets/...` pasa a ser `/Web-Page/assets/...`.
+
+2. **`basename` del router** (`app/router.tsx`). Sin esto, la URL
+   `/Web-Page/servicios` se interpretaria como la ruta `/Web-Page/servicios`
+   del sitio y no encontraria la pagina.
+
+3. **`rutaAsset()`** (`lib/assets.ts`). Las imagenes de `public/` se referencian
+   como `/images/...` en el codigo, lo que resolveria contra el dominio y
+   daria 404. El helper antepone la ruta base:
+   `rutaAsset('images/pasillo.jpg')`.
+
+4. **`404.html`** (`scripts/postbuild.mjs`). GitHub Pages es un servidor de
+   archivos estaticos: al pedir `/Web-Page/servicios` no encuentra nada y
+   devuelve su pagina de error. El script copia el `index.html` compilado
+   como `404.html`; como la aplicacion se dibuja en el cliente, esa copia
+   arranca en la URL correcta y React Router resuelve la ruta.
+
+Ademas, `public/.nojekyll` desactiva Jekyll, que de otro modo borra del
+despliegue cualquier ruta que empiece por guion bajo.
+
+### Comprobarlo antes de subir
+
+Para verificar en local el comportamiento exacto de GitHub Pages:
+
+```bash
+npm run build:pages
+npx vite preview --base /Web-Page/
+```
+
+Conviene abrir una ruta interna directamente (`/Web-Page/servicios`) y recargar
+la pagina: es el caso que fallaria si faltara el `404.html`.
+
+### Dominio propio
+
+Cuando exista, compilar con la ruta base en la raiz:
+
+```bash
+VITE_BASE_PATH=/ npm run build
+```
+
+y cambiar `VITE_BASE_PATH` a `/` en el workflow. No hace falta tocar el codigo
+de la aplicación.
+
+---
+
 ## Estado de la aplicación
 
 | Página | Ruta | Estado |

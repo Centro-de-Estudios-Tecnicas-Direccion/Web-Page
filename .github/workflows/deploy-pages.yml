@@ -1,0 +1,85 @@
+# Despliegue automático del frontend a GitHub Pages.
+#
+# Cada vez que se suba algo a `main` (o manualmente desde la pestaña Actions),
+# se compila `frontend/` y se publica en GitHub Pages.
+#
+# La URL del sitio se deriva del nombre del repositorio: si el repo se llama
+# `Web-Page`, el sitio queda en `/Web-Page/`. Si algún día se cambia a un
+# dominio propio, basta con poner `VITE_BASE_PATH: /` en este archivo.
+
+name: Desplegar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-pages.yml'
+  # Permite republished manualmente sin tocar nada.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nunca dos despliegues a la vez: el segundo cancela al primero.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Compilar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Copiar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Instalar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: frontend
+        run: npm ci
+
+      - name: Comprobar tipos y estilo
+        working-directory: frontend
+        run: |
+          npm run typecheck
+          npm run lint
+
+      - name: Compilar
+        working-directory: frontend
+        env:
+          # Publica bajo /<nombre-del-repositorio>/. GitHub Pages no sirve
+          # desde la raiz del dominio cuando el repositorio no es la pagina
+          # principal de la organizacion o del usuario.
+          VITE_BASE_PATH: ${{ format('/{0}/', github.event.repository.name) }}
+        run: npm run build
+
+      - name: Subir el artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+  deploy:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Desplegar en Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

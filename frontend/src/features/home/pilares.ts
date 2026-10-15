@@ -29,7 +29,7 @@ export const pilares: readonly Pilar[] = [
     indice: '03',
     titulo: 'Comunidad',
     texto:
-      'Una red de centros en todo el país y una Cátedra UNESCO que conectan a la Universidad de La Habana con barrios y territorios donde el desarrollo lo exige.',
+      'Cátedra UNESCO que conecta a la Universidad de La Habana con barrios y territorios donde el desarrollo lo exige.',
   },
   {
     indice: '04',

@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/Container'
 import { EncabezadoSeccion, Seccion } from '@/components/ui/Seccion'
 import { Distintivo } from '@/components/ui/Tarjeta'
 import { maestrias } from '@/features/home/programas'
+import { rutaAsset } from '@/lib/assets'
 import type { Programa } from '@/types/domain'
 
 function horas(valor: number): string {
@@ -53,7 +54,7 @@ export function Oferta() {
     <Seccion tono="hielo" id="oferta">
       <EncabezadoSeccion
         antetitulo="Formación de posgrado"
-        titulo="Dos maestrías, veinticinco ediciones de experiencia"
+        titulo="Maestrías con más de 25 ediciones de experiencia"
       >
         <p>
           La Maestría en Dirección es la primera de Cuba en su tipo. Junto a ella, la Maestría en
@@ -98,7 +99,7 @@ export function Laboratorio() {
   return (
     <section className="sobre-ceted-800 bg-ceted-800 relative isolate min-h-[34rem] overflow-hidden text-white md:min-h-[40rem] lg:min-h-[46rem]">
       <img
-        src="/images/pasillo.jpg"
+        src={rutaAsset('images/pasillo.jpg')}
         alt="Interior del CETED en la Universidad de La Habana"
         loading="lazy"
         className="foto-oscuro absolute inset-0 size-full object-cover"

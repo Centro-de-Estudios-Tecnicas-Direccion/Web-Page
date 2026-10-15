@@ -265,12 +265,52 @@ datos, en el 8080.
 
 ## 🌐 Despliegue
 
-`npm run build` genera el sitio estático en `frontend/dist/`. Sirve en
-cualquier hosting; si hay un backend, la API se publica aparte y se configura
-con `VITE_API_URL` en el momento de compilar.
+El sitio se publica en **GitHub Pages** mediante GitHub Actions. Cada `push` a
+`main` compila `frontend/` y lo publica; no hay que hacer nada mas.
+
+**Poner en marcha por primera vez** (una sola vez, desde el repositorio en GitHub):
+
+1. **Settings → Pages** → en *Build and deployment*, fuente **GitHub Actions**.
+2. Subir este código con `git push`.
+3. En la pestaña **Actions** se verá *Desplegar en GitHub Pages*. En menos de un
+   minuto aparecerá un check verde.
+4. El sitio quedará en:
+
+   ```
+   https://centro-de-estudios-tecnicas-direccion.github.io/Web-Page/
+   ```
+
+Para republicar sin tocar el código: en **Actions → Desplegar en GitHub Pages**
+→ *Run workflow*.
+
+### Cómo funciona
+
+| Pieza | Para qué |
+|---|---|
+| `VITE_BASE_PATH` | GitHub Pages sirve bajo `/Web-Page/`, no en la raíz del dominio. El workflow lo deduce del nombre del repositorio. |
+| `basename` en el router | Para que React Router resuelva las rutas dentro del subdirectorio. |
+| `rutaAsset()` | Prefija con la ruta base las imágenes de `public/`, que si no darían 404. |
+| `404.html` | GitHub Pages no sabe de enrutado. Sin este archivo, `/servicios` no funcionaría. Lo genera `scripts/postbuild.mjs`. |
+| `.nojekyll` | Desactiva Jekyll, que borra cualquier ruta que empiece por `_`. |
+
+### Probarlo en local antes de subir
 
 ```bash
 cd frontend
+npm run build:pages     # compila con la ruta base /Web-Page/
+npx vite preview
+```
+
+### Cuando exista un dominio propio
+
+Cambiar `VITE_BASE_PATH` a `/` en `.github/workflows/deploy-pages.yml` y añadir el
+dominio en **Settings → Pages**. El código no necesita otros cambios.
+
+### Con backend
+
+La API se publica aparte. Al compilar se indica su dirección:
+
+```bash
 VITE_API_URL=https://api.ceted.uh.cu npm run build
 ```
 

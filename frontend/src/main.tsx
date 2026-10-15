@@ -6,7 +6,7 @@ import { Providers } from '@/app/providers'
 
 /* Orden de importacion de estilos:
      1. tipografias auto-alojadas (sin dependencia de Google Fonts)
-     2. el sistema de diseno
+     2. el sistema de diseño
    La tipografia se declara antes para que el primer pintado use la fuente
    correcta y no produzca un salto de maquetacion. */
 import '@fontsource-variable/archivo/wdth.css'

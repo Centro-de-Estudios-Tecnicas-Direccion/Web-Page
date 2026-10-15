@@ -4,6 +4,7 @@ import { EnlaceBoton } from '@/components/ui/Boton'
 import { EncabezadoSeccion, Seccion } from '@/components/ui/Seccion'
 import { Distintivo } from '@/components/ui/Tarjeta'
 import type { NivelCurso, Programa } from '@/types/domain'
+import { rutaAsset } from '@/lib/assets'
 import { cursos, diplomados, doctorado, maestrias } from '@/features/home/programas'
 import { lineas } from '@/features/home/lineas'
 
@@ -190,7 +191,7 @@ export default function ServiciosPage() {
           </div>
           <figure className="lg:col-span-6 lg:col-start-7">
             <img
-              src="/images/edificio-economia.jpg"
+              src={rutaAsset('images/edificio-economia.jpg')}
               alt="Edificio de la Facultad de Economía de la Universidad de La Habana"
               loading="lazy"
               className="foto-oscuro aspect-4/3 w-full object-cover"
