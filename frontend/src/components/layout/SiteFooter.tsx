@@ -2,113 +2,102 @@ import { Link } from 'react-router'
 import { Mail, MapPin, Phone } from 'lucide-react'
 
 import { Logo } from '@/components/brand/Logo'
-import { MallaDecision } from '@/components/brand/MallaDecision'
 import { Container } from '@/components/ui/Container'
-import { Vector } from '@/components/brand/MallaDecision'
 import { footerNav } from '@/config/navigation'
 import { contactInfo, siteConfig } from '@/config/site'
 
-/**
- * Pie de pagina.
- *
- * Cierra con un bloque de color institucional —el mismo recurso que usa la
- * cabecera en la portada— para que la pagina termine con un remate solido en
- * lugar de disolverse.
- */
 export function SiteFooter() {
   const anio = new Date().getFullYear()
 
   return (
-    <footer className="sobre-ceted-900 bg-ceted-900 relative overflow-hidden text-white">
-      <MallaDecision intensidad={0.14} className="absolute inset-0 text-white" />
+    <footer className="bg-tinta-50 border-t-2 border-ceted-600 font-sans text-tinta-700">
+      <Container ancho="proceso">
+        <div className="py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          {/* Identidad institucional */}
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-3 text-ceted-600">
+              <Logo height={38} />
+              <div className="border-l border-tinta-300 pl-3">
+                <span className="font-display text-base font-semibold text-tinta-900 block leading-tight">
+                  CETED
+                </span>
+                <span className="text-[0.68rem] uppercase tracking-wider text-tinta-500 block">
+                  Universidad de La Habana
+                </span>
+              </div>
+            </div>
 
-      <Container className="relative">
-        <div className="py-seccion-sm grid gap-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-10">
-          {/* Identidad */}
-          <div className="lg:col-span-4">
-            <Logo height={44} className="text-white" />
-            <p className="mt-6 max-w-xs text-sm text-white/70">{siteConfig.description}</p>
-            <p className="font-display text-display-3 mt-8 font-semibold leading-tight text-white/95">
-              {siteConfig.tagline}
+            <p className="text-xs text-tinta-600 mt-4 max-w-sm leading-relaxed">
+              {siteConfig.description}
             </p>
+
+            <span className="font-display text-sm italic text-tinta-800 mt-4 block">
+              «{siteConfig.tagline}»
+            </span>
           </div>
 
-          {/* Navegacion secundaria */}
-          <nav aria-label="Formacion e investigacion" className="lg:col-span-4">
-            <h2 className="antetitulo mb-6 text-white/60">Formación e investigación</h2>
-            <ul className="space-y-3">
+          {/* Enlaces académicos */}
+          <div className="lg:col-span-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-tinta-900 mb-4">
+              Oferta Académica
+            </h3>
+            <ul className="space-y-2 text-xs">
               {footerNav.map((item) => (
                 <li key={item.to}>
-                  <Link
-                    to={item.to}
-                    className="group inline-flex items-center gap-2.5 text-sm text-white/80 transition-colors hover:text-white"
-                  >
-                    <Vector className="opacity-45 transition-transform group-hover:translate-x-0.5" />
+                  <Link to={item.to} className="hover:text-ceted-600 transition-colors">
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
 
-          {/* Contacto */}
+          {/* Contacto institucional */}
           <div className="lg:col-span-4">
-            <h2 className="antetitulo mb-6 text-white/60">Contacto</h2>
-            <address className="not-italic">
-              <ul className="space-y-4 text-sm text-white/80">
-                <li className="flex gap-3">
-                  <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 opacity-60" />
-                  <span>
-                    {contactInfo.address}
-                    <br />
-                    {contactInfo.city}
-                  </span>
-                </li>
-                <li className="flex gap-3">
-                  <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0 opacity-60" />
-                  <a
-                    href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {contactInfo.phone}
-                  </a>
-                </li>
-                <li className="flex gap-3">
-                  <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 opacity-60" />
-                  <a
-                    href={`mailto:${contactInfo.email}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {contactInfo.email}
-                  </a>
-                </li>
-              </ul>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-tinta-900 mb-4">
+              Sede y Secretaría
+            </h3>
+            <address className="not-italic space-y-2.5 text-xs text-tinta-600">
+              <div className="flex gap-2.5 items-start">
+                <MapPin className="size-4 shrink-0 text-ceted-600 mt-0.5" />
+                <span>{contactInfo.address}, {contactInfo.city}</span>
+              </div>
+              <div className="flex gap-2.5 items-center">
+                <Phone className="size-4 shrink-0 text-ceted-600" />
+                <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="hover:text-ceted-600">
+                  {contactInfo.phone}
+                </a>
+              </div>
+              <div className="flex gap-2.5 items-center">
+                <Mail className="size-4 shrink-0 text-ceted-600" />
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-ceted-600">
+                  {contactInfo.email}
+                </a>
+              </div>
             </address>
 
-            <ul className="mt-6 flex gap-5">
-              {contactInfo.social.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="enlace-marca text-sm text-white/80 hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                </li>
+            <div className="mt-4 pt-3 border-t border-tinta-200 flex gap-4 text-xs">
+              {contactInfo.social.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-ceted-600 hover:text-ceted-800 font-medium"
+                >
+                  {s.label}
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
-        {/* Pie legal */}
-        <div className="border-white/12 text-nota flex flex-col gap-4 border-t py-8 text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; {anio} CETED — {siteConfig.fullName}. {siteConfig.affiliation},{' '}
-            {siteConfig.country}.
-          </p>
-          <p className="cifras">Fundado en {siteConfig.foundedYear}</p>
+        {/* Fila legal inferior */}
+        <div className="border-t border-tinta-200 py-5 text-[0.75rem] text-tinta-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <span>
+            &copy; {anio} {siteConfig.fullName} — {siteConfig.affiliation}.
+          </span>
+          <span>La Habana, Cuba</span>
         </div>
       </Container>
     </footer>

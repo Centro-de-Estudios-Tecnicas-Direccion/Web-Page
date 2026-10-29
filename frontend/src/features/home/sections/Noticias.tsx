@@ -1,91 +1,59 @@
 import { Link } from 'react-router'
-
-import { Vector } from '@/components/brand/MallaDecision'
 import { Container } from '@/components/ui/Container'
-import { Distintivo } from '@/components/ui/Tarjeta'
 import { noticias } from '@/features/home/noticias'
 
-function fechaLarga(iso: string): string {
+function fechaCorta(iso: string): string {
   return new Date(`${iso}T12:00:00`).toLocaleDateString('es-CU', {
     day: 'numeric',
-    month: 'long',
+    month: 'short',
     year: 'numeric',
   })
 }
 
-/**
- * Noticias.
- *
- * Requisito funcional: el sitio debe mostrar las ultimas publicaciones. La
- * noticia destacada ocupa el ancho completo y el resto se alinea en fila: es
- * la manera de marcar jerarquia sin recurrir a sombras ni a bordes dobles.
- */
 export function Noticias() {
-  const [destacada, ...resto] = noticias
-
   return (
-    <section className="py-seccion">
-      <Container>
-        <div className="mb-12 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-8">
-            <p className="antetitulo text-ceted-600 mb-6">Actualidad</p>
-            <h2 className="text-display-2 font-display font-estirado text-balance font-semibold">
-              Últimas noticias
+    <section className="bg-white py-16">
+      <Container ancho="proceso">
+        <div className="border-b border-tinta-200 pb-4 mb-8 flex justify-between items-baseline">
+          <div>
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-ceted-600 block mb-1">
+              Actualidad
+            </span>
+            <h2 className="font-display text-display-2 font-normal text-tinta-950">
+              Convocatorias y Publicaciones
             </h2>
-            <p className="text-lead text-tinta-600 mt-6 max-w-2xl">
-              Conversaciones, convocatorias y resultados de investigación del claustro y de nuestros
-              estudiantes de posgrado.
-            </p>
           </div>
-
-          <div className="lg:col-span-4 lg:justify-self-end">
-            <Link
-              to="/noticias"
-              className="font-display text-ceted-700 hover:text-ceted-500 group inline-flex items-center gap-2.5 text-sm font-semibold tracking-tight transition-colors"
-            >
-              Ver todas
-              <Vector className="transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+          <Link
+            to="/noticias"
+            className="font-sans text-xs font-semibold text-ceted-600 hover:text-ceted-700 uppercase tracking-wider"
+          >
+            Ver todas las publicaciones →
+          </Link>
         </div>
 
-        <article className="border-tinta-900 grid gap-8 border-y py-9 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
-            <Distintivo>{destacada?.categoria}</Distintivo>
-            <h3 className="font-display text-display-2 font-estirado mt-5 text-balance font-semibold">
-              <Link to={`/noticias/${destacada?.slug}`} className="enlace-marca">
-                {destacada?.titulo}
-              </Link>
-            </h3>
-          </div>
-          <div className="lg:col-span-5">
-            <p className="text-lead text-tinta-600">{destacada?.resumen}</p>
-            <time dateTime={destacada?.fecha} className="text-nota text-tinta-500 mt-5 block">
-              {destacada && fechaLarga(destacada.fecha)}
-            </time>
-          </div>
-        </article>
+        <div className="divide-y divide-tinta-200 border-y border-tinta-200">
+          {noticias.map((item) => (
+            <article key={item.slug} className="py-4 grid gap-2 sm:grid-cols-12 sm:items-baseline">
+              <div className="sm:col-span-3 text-xs font-sans text-tinta-500">
+                <span className="font-semibold text-ceted-600 uppercase tracking-wider block">
+                  {item.categoria}
+                </span>
+                <time dateTime={item.fecha} className="cifras block mt-0.5">
+                  {fechaCorta(item.fecha)}
+                </time>
+              </div>
 
-        <ul className="bg-tinta-200 grid gap-px sm:grid-cols-2">
-          {resto.map((noticia) => (
-            <li key={noticia.slug} className="bg-white py-9 sm:px-8 first:sm:pl-0 last:sm:pr-0">
-              <article className="group flex h-full flex-col">
-                <div className="flex items-center gap-4">
-                  <Distintivo tono="neutro">{noticia.categoria}</Distintivo>
-                  <time dateTime={noticia.fecha} className="text-nota text-tinta-500">
-                    {fechaLarga(noticia.fecha)}
-                  </time>
-                </div>
-                <h3 className="font-display mt-5 text-balance text-[1.25rem] font-semibold">
-                  <Link to={`/noticias/${noticia.slug}`} className="enlace-marca">
-                    {noticia.titulo}
-                  </Link>
+              <div className="sm:col-span-9">
+                <h3 className="font-display text-lg font-medium text-tinta-950 hover:text-ceted-600 transition-colors">
+                  <Link to={`/noticias/${item.slug}`}>{item.titulo}</Link>
                 </h3>
-                <p className="text-tinta-600 mt-3 flex-1 text-sm">{noticia.resumen}</p>
-              </article>
-            </li>
+                <p className="font-sans text-xs text-tinta-600 mt-1 leading-relaxed">
+                  {item.resumen}
+                </p>
+              </div>
+            </article>
           ))}
-        </ul>
+        </div>
       </Container>
     </section>
   )

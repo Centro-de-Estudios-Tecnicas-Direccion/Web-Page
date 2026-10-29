@@ -1,34 +1,24 @@
 import { Hero } from '@/features/home/sections/Hero'
-import { Pilares } from '@/features/home/sections/Pilares'
-import { Oferta, Laboratorio, Llamada } from '@/features/home/sections/Oferta'
-import { Historia } from '@/features/home/sections/Historia'
+import { Oferta } from '@/features/home/sections/Oferta'
 import { Catedra } from '@/features/home/sections/Catedra'
 import { Noticias } from '@/features/home/sections/Noticias'
 
 /**
- * Portada.
+ * Portada Académica del CETED.
  *
- * El orden de las secciones no es decorativo: es un argumento.
- *   Hero        → de que institution se trata
- *   Pilares     → con que criterios trabaja
- *   Oferta      → que forma ofrece
- *   Laboratorio → como se enseña de verdad
- *   Historia    → que respaldo tiene
- *   Catedra     → hacia donde se proyecta
- *   Noticias    → que esta pasando ahora
- *   Llamada     → que hacer a continuacion
+ * Flujo de información limpio (Patrón Harvard Economics):
+ * 1. Hero      → Identidad, misión docente y acceso rápido.
+ * 2. Oferta    → Catálogo oficial de posgrados (Maestrías y Diplomados).
+ * 3. Cátedra   → Investigación aplicada (Cátedra UNESCO y Laboratorio).
+ * 4. Noticias  → Publicaciones, defensas de tesis y convocatorias abiertas.
  */
 export function InicioPage() {
   return (
     <>
       <Hero />
-      <Pilares />
       <Oferta />
-      <Laboratorio />
-      <Historia />
       <Catedra />
       <Noticias />
-      <Llamada />
     </>
   )
 }

@@ -1,177 +1,129 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 
 import { Logo } from '@/components/brand/Logo'
 import { Container } from '@/components/ui/Container'
 import { mainNav } from '@/config/navigation'
-import { contactInfo } from '@/config/site'
+import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/cn'
 
-/**
- * Cabecera del sitio.
- *
- * Dos comportamientos, deliberadamente distintos:
- *   · En la portada el logotipo va sobre el bloque de color y la cabecera es
- *     transparente, para que el hero ocupe la pantalla completa.
- *   · En el resto de paginas la cabecera es solida, con filete inferior.
- */
 export function SiteHeader() {
-  const [desplazado, setDesplazado] = useState(false)
   const [menuAbierto, setMenuAbierto] = useState(false)
   const { pathname } = useLocation()
-  const enPortada = pathname === '/'
 
-  useEffect(() => {
-    const alDesplazar = () => setDesplazado(window.scrollY > 24)
-    alDesplazar()
-    window.addEventListener('scroll', alDesplazar, { passive: true })
-    return () => window.removeEventListener('scroll', alDesplazar)
-  }, [])
-
-  // El menu movil se cierra al cambiar de pagina.
   useEffect(() => setMenuAbierto(false), [pathname])
 
-  // Bloquea el scroll del cuerpo mientras el menu movil esta abierto.
-  useEffect(() => {
-    document.body.style.overflow = menuAbierto ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuAbierto])
-
-  const solida = !enPortada || desplazado
-
   return (
-    <header
-      className={cn(
-        'ease-marca fixed inset-x-0 top-0 z-50 transition-colors duration-300',
-        solida ? 'border-tinta-200 border-b bg-white/95 backdrop-blur-md' : 'bg-transparent',
-      )}
-    >
-      <Container ancho="extenso">
-        <div
-          className={cn(
-            'ease-marca flex items-center justify-between gap-6 transition-[height] duration-300',
-            solida ? 'h-18' : 'h-24',
-          )}
-        >
+    <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-tinta-200">
+      {/* Cintillo institucional superior en azul oficial del CETED */}
+      <div className="bg-ceted-600 text-white text-[0.72rem] tracking-wider uppercase py-1.5 font-sans">
+        <Container ancho="proceso">
+          <div className="flex justify-between items-center">
+            <span className="font-semibold tracking-wide">
+              {siteConfig.affiliation}
+            </span>
+            <span className="hidden sm:inline text-white/90">
+              Centro de Estudios de Técnicas de Dirección
+            </span>
+          </div>
+        </Container>
+      </div>
+
+      {/* Barra de navegación principal */}
+      <Container ancho="proceso">
+        <div className="flex h-20 items-center justify-between gap-6">
           <Link
             to="/"
-            className={cn(
-              'shrink-0 transition-colors duration-300',
-              solida ? 'text-ceted-600' : 'text-white',
-            )}
-            aria-label="CETED — ir al inicio"
+            className="flex items-center gap-3 text-ceted-600 transition-opacity hover:opacity-90"
+            aria-label="CETED — Inicio"
           >
-            <Logo height={solida ? 32 : 40} />
+            <Logo height={42} />
+            <div className="hidden sm:flex flex-col border-l border-tinta-200 pl-3.5 text-left">
+              <span className="font-display text-base font-semibold text-tinta-900 leading-tight">
+                CETED
+              </span>
+              <span className="font-sans text-[0.68rem] text-tinta-500 uppercase tracking-wider">
+                Universidad de La Habana
+              </span>
+            </div>
           </Link>
 
-          {/* Navegacion principal — escritorio */}
-          <nav
-            aria-label="Navegacion principal"
-            className={cn(
-              'hidden items-center gap-1 lg:flex',
-              solida ? 'text-tinta-900' : 'text-white',
-            )}
-          >
-            {mainNav.slice(0, -1).map((item) => (
+          {/* Menú de escritorio */}
+          <nav aria-label="Navegación principal" className="hidden items-center gap-8 lg:flex">
+            {mainNav.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
-                className={() =>
+                className={({ isActive }) =>
                   cn(
-                    'font-display relative px-3.5 py-2 text-sm font-medium tracking-tight',
-                    'transition-colors duration-200',
-                    'after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0',
-                    'after:bg-ceted-500 after:ease-marca after:transition-transform after:duration-200',
-                    solida
-                      ? 'hover:text-ceted-700 aria-[current]:text-ceted-700 after:hover:scale-x-100 aria-[current]:after:scale-x-100'
-                      : 'text-white/85 after:bg-white hover:text-white after:hover:scale-x-100 aria-[current]:text-white aria-[current]:after:scale-x-100',
+                    'font-sans text-sm tracking-normal transition-colors py-1 border-b-2',
+                    isActive
+                      ? 'border-ceted-600 font-semibold text-ceted-600'
+                      : 'border-transparent text-tinta-700 hover:text-ceted-600',
                   )
                 }
               >
                 {item.label}
               </NavLink>
             ))}
-            <a
-              href={`mailto:${contactInfo.email}`}
-              className={cn(
-                'rounded-xs font-display ml-3 inline-flex h-10 items-center px-5 text-sm font-semibold tracking-tight',
-                'transition-colors duration-200',
-                solida
-                  ? 'bg-ceted-600 hover:bg-ceted-700 text-white'
-                  : 'text-ceted-700 hover:bg-ceted-50 bg-white',
-              )}
+
+            <Link
+              to="/acceso"
+              className="inline-flex h-9 items-center border border-ceted-600 px-4 font-sans text-xs font-semibold tracking-wider uppercase text-ceted-600 transition-colors hover:bg-ceted-600 hover:text-white"
             >
-              Contáctenos
-            </a>
+              Acceso
+            </Link>
           </nav>
 
-          {/* Accion movil */}
+          {/* Botón menú móvil */}
           <button
             type="button"
             onClick={() => setMenuAbierto((v) => !v)}
             aria-expanded={menuAbierto}
             aria-controls="menu-movil"
-            className={cn(
-              'relative -mr-2 inline-flex size-11 items-center justify-center lg:hidden',
-              'transition-colors duration-200',
-              solida ? 'text-tinta-900' : 'text-white',
-            )}
+            className="inline-flex size-10 items-center justify-center text-tinta-700 lg:hidden border border-tinta-200"
           >
-            <span className="sr-only">{menuAbierto ? 'Cerrar el menu' : 'Abrir el menu'}</span>
-            <svg
-              viewBox="0 0 24 24"
-              className="size-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
+            <span className="sr-only">{menuAbierto ? 'Cerrar menú' : 'Abrir menú'}</span>
+            <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2">
               {menuAbierto ? (
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="square" />
               ) : (
-                <path d="M3 7h18M3 12h18M3 17h18" strokeLinecap="round" />
+                <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="square" />
               )}
             </svg>
           </button>
         </div>
       </Container>
 
-      {/* Panel del menu movil */}
-      <div
-        id="menu-movil"
-        hidden={!menuAbierto}
-        className="animate-entrada border-tinta-200 border-t bg-white lg:hidden"
-      >
-        <Container>
-          <nav aria-label="Navegacion movil" className="py-4">
-            {mainNav.map((item, i) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  cn(
-                    'border-tinta-100 flex items-baseline gap-4 border-b py-4 last:border-b-0',
-                    'font-display text-lg font-semibold tracking-tight',
-                    isActive ? 'text-ceted-600' : 'text-tinta-900',
-                  )
-                }
+      {/* Menú desplegable móvil */}
+      {menuAbierto && (
+        <div id="menu-movil" className="border-t border-tinta-200 bg-white py-4 lg:hidden">
+          <Container ancho="proceso">
+            <nav className="flex flex-col space-y-3 font-sans">
+              {mainNav.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'py-2 text-sm border-b border-tinta-100',
+                      isActive ? 'text-ceted-600 font-semibold' : 'text-tinta-800',
+                    )
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+              <Link
+                to="/acceso"
+                className="mt-2 inline-flex h-10 items-center justify-center bg-ceted-600 text-white text-xs font-semibold uppercase tracking-wider"
               >
-                <span className="cifras text-etiqueta text-tinta-400 font-medium">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-          <a
-            href={`mailto:${contactInfo.email}`}
-            className="rounded-xs bg-ceted-600 font-display my-4 flex h-12 items-center justify-center font-semibold text-white"
-          >
-            {contactInfo.email}
-          </a>
-        </Container>
-      </div>
+                Acceso al Sistema
+              </Link>
+            </nav>
+          </Container>
+        </div>
+      )}
     </header>
   )
 }
