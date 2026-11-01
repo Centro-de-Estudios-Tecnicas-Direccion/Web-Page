@@ -1,9 +1,0 @@
-/* =============================================================================
-   CETED · Punto de entrada de estilos
-   El orden importa: Tailwind genera las capas, despues se inyectan los tokens
-   y por ultimo la capa base que los consume.
-   ========================================================================== */
-
-@import 'tailwindcss';
-@import './tokens.css';
-@import './base.css';

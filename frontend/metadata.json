@@ -1,0 +1,7 @@
+{
+  "name": "CETED | Centro de Estudios de Técnicas de Dirección",
+  "description": "Un centro de excelencia que piensa con usted. Formación ejecutiva, maestrías en Dirección, Marketing y Gestión de Proyectos, e impacto institucional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

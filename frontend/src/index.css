@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Source Serif 4", Georgia, Cambria, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-ceted-blue: #0D5DD7;
+  --color-ceted-hover: #094ab2;
+  --color-ceted-dark: #0A2540;
+  --color-ceted-navy: #06182C;
+}
+
+html {
+  font-family: var(--font-sans);
+  color-scheme: light;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid #0D5DD7;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
