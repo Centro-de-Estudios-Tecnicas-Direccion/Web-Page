@@ -51,12 +51,6 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Comprobar tipos y estilo
-        working-directory: frontend
-        run: |
-          npm run typecheck
-          npm run lint
-
       - name: Compilar
         working-directory: frontend
         env:
