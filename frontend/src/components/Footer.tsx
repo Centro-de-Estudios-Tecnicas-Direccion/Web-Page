@@ -36,6 +36,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       url: 'https://www.uh.cu',
       desc: 'Articulación científica y repositorio institucional',
     },
+    // --- Nuevos enlaces agregados ---
+    {
+      name: 'MES',
+      url: 'https://www.mes.gob.cu',
+      desc: 'Ministerio de Educación Superior',
+    },
+    {
+      name: 'CITMA',
+      url: 'https://www.citma.gob.cu',
+      desc: 'Ministerio de Ciencia, Tecnología y Medio Ambiente',
+    },
+    {
+      name: 'ANEC',
+      url: 'https://www.anec.cu',
+      desc: 'Asociación Nacional de Economistas y Contadores de Cuba',
+    },
+    {
+      name: 'Academia de Ciencias de Cuba (ACC)',
+      url: 'https://www.academiaciencias.cu',
+      desc: 'Institución científica de máximo rango en Cuba',
+    },
   ];
 
   return (
@@ -190,10 +211,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Enlaces universitarios */}
+          {/* Enlaces Institucionales */}
           <div className="space-y-3 lg:col-span-3">
             <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-white">
-              Enlaces Universitarios
+              Enlaces Institucionales
             </h3>
             <ul className="space-y-3 text-sm">
               {universityLinks.map((link, idx) => (

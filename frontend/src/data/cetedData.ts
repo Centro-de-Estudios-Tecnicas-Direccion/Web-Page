@@ -7,32 +7,26 @@ import { FACULTY_MEMBERS_FULL } from './cetedFullData';
 
 export const HERO_SLIDES = [
   {
-    id: 'slide-1',
-    image: '/assets/images/hero_1.JPG',
-    caption: 'Seamos realistas y hagamos lo imposible',
-    subcaption: 'Filosofía institucional y visión transformadora del CETED',
-  },
-  {
     id: 'slide-2',
-    image: '/assets/images/hero_2.JPG', 
+    image: `${import.meta.env.BASE_URL}assets/images/hero_2.JPG`,
     caption: 'Claustro y equipo de trabajo del CETED',
     subcaption: 'Un colectivo comprometido con la excelencia académica y la investigación',
   },
   {
     id: 'slide-3',
-    image: '/assets/images/hero_3.JPG', 
+    image: `${import.meta.env.BASE_URL}assets/images/hero_3.JPG`,
     caption: 'Sesión académica y análisis de casos',
     subcaption: 'Participación activa de directivos y estudiantes en el aula',
   },
   {
     id: 'slide-4',
-    image: '/assets/images/hero_4.JPG',
+    image: `${import.meta.env.BASE_URL}assets/images/hero_4.JPG`,
     caption: 'Intercambio directivo y debate académico',
     subcaption: 'Profesores y expertos compartiendo experiencias en tiempo real',
   },
   {
     id: 'slide-5',
-    image: '/assets/images/hero_5.JPG', 
+    image: `${import.meta.env.BASE_URL}assets/images/hero_5.JPG`,
     caption: 'Exposiciones y conferencias de alto nivel',
     subcaption: 'Vinculación de la teoría con la práctica en la resolución de problemas',
   },
