@@ -7,18 +7,13 @@ import {
   BLOG_POSTS,
 } from '../data/cetedFullData';
 import {
-  Search,
-  BookOpen,
-  Calendar,
   CheckCircle2,
-  Clock,
   ArrowRight,
   Globe2,
   ExternalLink,
   User,
   X,
   UserCheck,
-  Layers,
   FileText,
 } from 'lucide-react';
 
@@ -32,7 +27,7 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
   const [selectedProject, setSelectedProject] = useState<ResearchProject | null>(null);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  // Lock background scroll when ANY modal is open and handle ESC key
+  // Bloquea el scroll con cualquier modal abierto y maneja ESC
   useEffect(() => {
     const hasModal = Boolean(selectedLine || selectedProject || selectedPost);
     if (hasModal) {
@@ -60,71 +55,85 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
       ? RESEARCH_PROJECTS
       : RESEARCH_PROJECTS.filter((p) => p.lineId === selectedLineId);
 
+  const eyebrow =
+    'text-xs font-semibold uppercase tracking-[0.14em] text-ceted-blue dark:text-blue-300';
+  const h2 =
+    'mt-2 font-serif text-3xl font-semibold tracking-tight text-ceted-dark dark:text-white sm:text-4xl';
+  const card =
+    'rounded-xl border border-slate-200 bg-white shadow-xs transition duration-200 hover:-translate-y-0.5 hover:border-ceted-blue hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none dark:border-ceted-line dark:bg-ceted-dark dark:hover:border-blue-400';
+  const linkBtn =
+    'flex items-center gap-1.5 rounded-sm font-semibold text-ceted-blue underline-offset-4 hover:underline dark:text-blue-300';
+  const chipBlue =
+    'rounded border border-blue-100 bg-blue-50 text-ceted-blue dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300';
+  const tag =
+    'rounded border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-700 dark:border-ceted-line dark:bg-ceted-navy dark:text-slate-300';
+  const primaryBtn =
+    'inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg bg-ceted-blue px-5 py-2.5 text-sm font-semibold text-white transition duration-150 hover:bg-ceted-hover active:scale-[0.98] motion-reduce:active:scale-100 dark:hover:bg-[#1567E3]';
+  const closeIconBtn =
+    'absolute right-4 top-4 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-ceted-deep dark:hover:text-white';
+  const overlay =
+    'fixed inset-0 z-50 flex animate-fade-in items-center justify-center overscroll-contain bg-black/60 p-4 backdrop-blur-xs motion-reduce:animate-none sm:p-6';
+  const modalBase =
+    'relative max-h-[90vh] w-full animate-pop-in overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-2xl motion-reduce:animate-none dark:border-ceted-line dark:bg-ceted-dark sm:p-8';
+  const modalLabel =
+    'mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white';
+
   return (
-    <div className="pt-24 pb-20 text-slate-800 text-left">
-      
-      {/* Header (SOLID #0D5DD7) */}
-      <section className="bg-[#0D5DD7] text-white py-14 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <span className="text-xs font-bold tracking-wider uppercase text-blue-100">
+    <div className="pb-20 pt-24 text-left text-slate-800 dark:text-slate-200">
+      {/* Encabezado */}
+      <section className="bg-ceted-blue px-4 py-14 text-white dark:border-b dark:border-ceted-line dark:bg-ceted-dark sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-100 dark:text-blue-300">
             Producción Científica y Extensión
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 text-white">
+          <h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight text-white sm:text-5xl">
             Investigación y Cátedra UNESCO
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-white/95 max-w-3xl leading-relaxed">
-            Ejes de investigación aplicada, cartera de proyectos territoriales, la Cátedra UNESCO 
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-blue-50 dark:text-slate-300 sm:text-lg">
+            Ejes de investigación aplicada, cartera de proyectos territoriales, la Cátedra UNESCO
             en educación directiva y los artículos científicos de nuestro claustro.
           </p>
         </div>
       </section>
 
-      {/* 01. LÍNEAS DE INVESTIGACIÓN (CLIC EN COORDINADOR LLEVA A SU PÁGINA EN CLAUSTRO) */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
-        <div className="max-w-2xl mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-            Ejes Temáticos
-          </span>
-          <h2 className="font-serif text-3xl font-bold text-[#0D5DD7] mt-1">
-            Líneas de Investigación del CETED
-          </h2>
-          <p className="text-sm text-slate-600 mt-2">
+      {/* 01. LÍNEAS DE INVESTIGACIÓN */}
+      <section className="mx-auto max-w-7xl border-b border-slate-200 px-4 py-16 dark:border-ceted-line sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-2xl">
+          <span className={eyebrow}>Ejes Temáticos</span>
+          <h2 className={h2}>Líneas de Investigación del CETED</h2>
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
             Haga clic en el nombre del profesor líder para consultar su currículum y trayectoria en el Claustro.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {RESEARCH_LINES.map((line) => (
-            <div
-              key={line.id}
-              className="bg-white border-2 border-slate-200 hover:border-[#0D5DD7] rounded-xl p-8 transition-all shadow-xs flex flex-col justify-between"
-            >
+            <div key={line.id} className={`flex flex-col justify-between p-8 ${card}`}>
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono font-bold text-[#0D5DD7] bg-blue-50 px-2.5 py-1 rounded">
+                <div className="flex items-center justify-between gap-2 text-xs">
+                  <span className={`${chipBlue} px-2.5 py-1 font-mono font-bold`}>
                     LÍNEA CIENTÍFICA
                   </span>
-                  <span className="text-slate-600 font-semibold">{line.activeProjects} proyectos activos</span>
+                  <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+                    {line.activeProjects} proyectos activos
+                  </span>
                 </div>
 
-                <h3 className="font-serif text-2xl font-bold text-slate-900 leading-snug">
+                <h3 className="font-serif text-2xl font-semibold leading-snug text-slate-900 dark:text-white">
                   {line.title}
                 </h3>
 
-                <p className="text-[15px] sm:text-base text-slate-700 leading-[1.75]">
+                <p className="text-[15px] leading-[1.75] text-slate-700 dark:text-slate-300 sm:text-base">
                   {line.description}
                 </p>
 
-                <div className="pt-2 border-t border-slate-100">
-                  <span className="text-xs font-bold text-slate-900 block mb-1.5">
+                <div className="border-t border-slate-100 pt-3 dark:border-ceted-line">
+                  <span className="mb-2 block text-sm font-semibold text-slate-900 dark:text-white">
                     Descriptores Temáticos:
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {line.keyTopics.map((topic, i) => (
-                      <span
-                        key={i}
-                        className="text-xs text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1 rounded"
-                      >
+                      <span key={i} className={tag}>
                         {topic}
                       </span>
                     ))}
@@ -132,28 +141,29 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              {/* Botones interactivos para abrir la ficha de la línea y consultar al líder */}
-              <div className="pt-5 mt-5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-5 dark:border-ceted-line">
                 <button
                   type="button"
                   onClick={() => setSelectedLine(line)}
-                  className="text-xs font-semibold text-[#0D5DD7] hover:underline flex items-center gap-1.5 min-h-[36px]"
+                  className={`${linkBtn} min-h-[40px] text-sm`}
                 >
-                  <FileText className="w-3.5 h-3.5 text-[#0D5DD7]" />
+                  <FileText className="h-4 w-4" aria-hidden="true" />
                   <span>Ver Ficha Metodológica</span>
                 </button>
 
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-slate-500 font-medium">Líder:</span>
+                  <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                    Líder:
+                  </span>
                   <button
                     type="button"
                     onClick={() => onNavigate('claustro', undefined, line.leaderId)}
-                    className="text-xs sm:text-sm font-bold text-[#0D5DD7] hover:underline flex items-center gap-1 min-h-[36px]"
+                    className={`${linkBtn} min-h-[40px] text-sm font-bold`}
                     title={`Ver ficha completa de ${line.leader} en el Claustro`}
                   >
-                    <UserCheck className="w-4 h-4 text-[#0D5DD7]" />
+                    <UserCheck className="h-4 w-4" aria-hidden="true" />
                     <span>{line.leader}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#0D5DD7]" />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -162,26 +172,27 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* 02. PROYECTOS DE INVESTIGACIÓN (CLIC EN COORDINADOR LLEVA A SU PÁGINA EN CLAUSTRO) */}
-      <section className="py-16 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+      {/* 02. PROYECTOS */}
+      <section className="border-b border-slate-200 bg-slate-50 py-16 dark:border-ceted-line dark:bg-ceted-mid">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-                Cartera de I+D
-              </span>
-              <h2 className="font-serif text-3xl font-bold text-[#0D5DD7] mt-1">
-                Proyectos de Investigación Aplicada
-              </h2>
+              <span className={eyebrow}>Cartera de I+D</span>
+              <h2 className={h2}>Proyectos de Investigación Aplicada</h2>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-700 font-semibold">Filtrar por eje:</span>
+              <label
+                htmlFor="filtro-eje"
+                className="text-sm font-semibold text-slate-700 dark:text-slate-300"
+              >
+                Filtrar por eje:
+              </label>
               <select
+                id="filtro-eje"
                 value={selectedLineId}
                 onChange={(e) => setSelectedLineId(e.target.value)}
-                className="px-3 py-2 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0D5DD7]"
+                className="min-h-[44px] rounded-lg border border-slate-500 bg-white px-3 py-2 text-sm text-slate-800 transition-colors hover:border-slate-700 focus:border-ceted-blue dark:border-slate-500 dark:bg-ceted-navy dark:text-slate-100 dark:hover:border-slate-300 dark:focus:border-blue-400"
               >
                 <option value="all">Todos los proyectos</option>
                 {RESEARCH_LINES.map((l) => (
@@ -193,51 +204,55 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {filteredProjects.map((proj) => (
-              <div
-                key={proj.id}
-                className="bg-white border-2 border-slate-200 hover:border-[#0D5DD7] rounded-xl p-6 shadow-xs flex flex-col justify-between"
-              >
+              <div key={proj.id} className={`flex flex-col justify-between p-6 ${card}`}>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono text-slate-600 font-medium">{proj.duration}</span>
-                    <span className="text-xs font-bold text-[#0D5DD7] bg-blue-50 px-2.5 py-0.5 rounded border border-blue-100">
+                  <div className="flex items-center justify-between gap-2 text-xs">
+                    <span className="font-mono font-medium text-slate-600 dark:text-slate-400">
+                      {proj.duration}
+                    </span>
+                    <span className={`${chipBlue} px-2.5 py-0.5 text-xs font-bold`}>
                       {proj.status}
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-lg font-bold text-slate-900 leading-snug">
+                  <h3 className="font-serif text-lg font-semibold leading-snug text-slate-900 dark:text-white">
                     {proj.title}
                   </h3>
 
-                  <p className="text-sm text-slate-700 leading-[1.7]">
+                  <p className="text-sm leading-[1.7] text-slate-700 dark:text-slate-300">
                     {proj.abstract}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-slate-100 space-y-2 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">Coordinador:</span>
+                <div className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-sm dark:border-ceted-line">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <span className="text-slate-600 dark:text-slate-400">Coordinador:</span>
                     <button
                       type="button"
                       onClick={() => onNavigate('claustro', undefined, proj.coordinatorId)}
-                      className="font-bold text-[#0D5DD7] hover:underline flex items-center gap-1.5 min-h-[32px]"
+                      className={`${linkBtn} min-h-[36px] text-left font-bold`}
                       title="Ver perfil del docente en el Claustro"
                     >
-                      <User className="w-3.5 h-3.5 text-[#0D5DD7]" />
+                      <User className="h-4 w-4 shrink-0" aria-hidden="true" />
                       <span>{proj.coordinator}</span>
-                      <ArrowRight className="w-3 h-3 text-[#0D5DD7]" />
+                      <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     </button>
                   </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-100">
-                    <span className="text-slate-500">Alcance: <strong className="text-slate-800 font-medium">{proj.scope}</strong></span>
+                  <div className="flex flex-wrap items-center justify-between gap-1 border-t border-slate-100 pt-1 dark:border-ceted-line">
+                    <span className="text-slate-600 dark:text-slate-400">
+                      Alcance:{' '}
+                      <strong className="font-medium text-slate-800 dark:text-slate-100">
+                        {proj.scope}
+                      </strong>
+                    </span>
                     <button
                       type="button"
                       onClick={() => setSelectedProject(proj)}
-                      className="font-semibold text-[#0D5DD7] hover:underline flex items-center gap-1 min-h-[32px]"
+                      className={`${linkBtn} min-h-[36px]`}
                     >
-                      <FileText className="w-3 h-3" />
+                      <FileText className="h-3.5 w-3.5" aria-hidden="true" />
                       <span>Ficha técnica</span>
                     </button>
                   </div>
@@ -245,140 +260,139 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* 03. REDEC - CÁTEDRA UNESCO (SOLID WHITE) */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
-        <div className="bg-white border-2 border-slate-200 rounded-xl p-8 sm:p-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-                Cooperación Académica Internacional
-              </span>
-              <h2 className="font-serif text-3xl font-bold text-[#0D5DD7]">
+      {/* 03. REDEC - CÁTEDRA UNESCO */}
+      <section className="mx-auto max-w-7xl border-b border-slate-200 px-4 py-16 dark:border-ceted-line sm:px-6 lg:px-8">
+        <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-xs dark:border-ceted-line dark:bg-ceted-dark sm:p-10">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
+            <div className="space-y-4 lg:col-span-8">
+              <span className={eyebrow}>Cooperación Académica Internacional</span>
+              <h2 className="font-serif text-3xl font-semibold tracking-tight text-ceted-dark dark:text-white">
                 {EXTENSION_REDEC.title}
               </h2>
-              <p className="text-base text-slate-700 leading-relaxed">
+              <p className="text-base leading-relaxed text-slate-700 dark:text-slate-300">
                 {EXTENSION_REDEC.description}
               </p>
 
               <div className="space-y-2 pt-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-900 block">
+                <span className="block text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
                   Objetivos Principales de la Cátedra:
                 </span>
                 {EXTENSION_REDEC.objectives.slice(0, 3).map((obj, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-sm text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-[#0D5DD7] shrink-0 mt-0.5" />
+                  <div
+                    key={i}
+                    className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300"
+                  >
+                    <CheckCircle2
+                      className="mt-0.5 h-4 w-4 shrink-0 text-ceted-blue dark:text-blue-300"
+                      aria-hidden="true"
+                    />
                     <span>{obj}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-[#0D5DD7] text-white p-8 rounded-xl space-y-4 text-center">
-              <Globe2 className="w-12 h-12 mx-auto text-white" />
-              <h3 className="font-serif text-xl font-bold">
-                Cátedra UNESCO & Redec
-              </h3>
-              <p className="text-xs text-white/95">
+            <div className="space-y-4 rounded-xl bg-ceted-blue p-8 text-center text-white dark:border dark:border-ceted-line dark:bg-ceted-navy lg:col-span-4">
+              <Globe2 className="mx-auto h-12 w-12 text-white" aria-hidden="true" />
+              <h3 className="font-serif text-xl font-semibold">Cátedra UNESCO & Redec</h3>
+              <p className="text-sm text-blue-50 dark:text-slate-300">
                 Espacio digital oficial, canales de difusión y vinculación internacional en economías circulares:
               </p>
-              
+
               <div className="space-y-2 pt-2">
                 <a
                   href={EXTENSION_REDEC.linktree}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 text-xs font-bold text-[#0D5DD7] bg-white hover:bg-slate-100 rounded-lg transition-colors min-h-[44px]"
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-bold text-ceted-blue transition duration-150 hover:bg-slate-100 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-white"
                 >
                   <span>Portal Web Linktree Oficial</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 </a>
 
-                <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+                <div className="grid grid-cols-2 gap-2 pt-1 text-sm">
                   <a
                     href={EXTENSION_REDEC.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-lg border border-white/40 hover:bg-white/10 text-white font-medium flex items-center justify-center gap-1 transition-colors"
+                    className="flex min-h-[44px] items-center justify-center gap-1 rounded-lg border border-white/40 p-2.5 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-white"
                   >
                     <span>Facebook</span>
-                    <ExternalLink className="w-3 h-3 text-white/70" />
+                    <ExternalLink className="h-3.5 w-3.5 text-white/80" aria-hidden="true" />
                   </a>
                   <a
                     href={EXTENSION_REDEC.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-lg border border-white/40 hover:bg-white/10 text-white font-medium flex items-center justify-center gap-1 transition-colors"
+                    className="flex min-h-[44px] items-center justify-center gap-1 rounded-lg border border-white/40 p-2.5 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-white"
                   >
                     <span>Instagram</span>
-                    <ExternalLink className="w-3 h-3 text-white/70" />
+                    <ExternalLink className="h-3.5 w-3.5 text-white/80" aria-hidden="true" />
                   </a>
                 </div>
 
-                <div className="pt-2 text-[11px] text-blue-100 border-t border-white/20 font-mono">
+                <div className="border-t border-white/20 pt-2 font-mono text-xs text-blue-100 dark:text-slate-300">
                   <span>{EXTENSION_REDEC.email}</span> · <span>{EXTENSION_REDEC.phone}</span>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 04. BLOG CIENTÍFICO DE DIRECCIÓN */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-            Divulgación Científica
-          </span>
-          <h2 className="font-serif text-3xl font-bold text-[#0D5DD7] mt-1">
-            Blog Científico de Dirección
-          </h2>
-          <p className="text-sm text-slate-600 mt-2">
+      {/* 04. BLOG CIENTÍFICO */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-2xl">
+          <span className={eyebrow}>Divulgación Científica</span>
+          <h2 className={h2}>Blog Científico de Dirección</h2>
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
             Artículos metodológicos y de gestión redactados por los profesores de CETED.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {BLOG_POSTS.map((post) => (
-            <article
-              key={post.id}
-              className="bg-white border-2 border-slate-200 hover:border-[#0D5DD7] rounded-xl p-6 shadow-xs flex flex-col justify-between group"
-            >
+            <article key={post.id} className={`group flex flex-col justify-between p-6 ${card}`}>
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <span className="font-bold text-[#0D5DD7]">{post.category}</span>
-                  <span>·</span>
+                <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                  <span className="font-bold text-ceted-blue dark:text-blue-300">
+                    {post.category}
+                  </span>
+                  <span aria-hidden="true">·</span>
                   <span>{post.readTime}</span>
                 </div>
 
-                <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-[#0D5DD7] transition-colors leading-snug">
+                <h3 className="font-serif text-lg font-semibold leading-snug text-slate-900 transition-colors group-hover:text-ceted-blue dark:text-white dark:group-hover:text-blue-300">
                   {post.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                <p className="line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   {post.summary}
                 </p>
 
-                <div className="pt-2 text-xs text-slate-700 flex items-center gap-1.5 font-medium">
-                  <User className="w-3.5 h-3.5 text-[#0D5DD7]" />
+                <div className="flex items-center gap-1.5 pt-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <User className="h-4 w-4 text-ceted-blue dark:text-blue-300" aria-hidden="true" />
                   <span>{post.author}</span>
                 </div>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-slate-500">{post.date}</span>
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-ceted-line">
+                <span className="font-mono text-xs text-slate-600 dark:text-slate-400">
+                  {post.date}
+                </span>
                 <button
                   type="button"
                   onClick={() => setSelectedPost(post)}
-                  className="text-xs font-bold text-[#0D5DD7] hover:underline flex items-center gap-1"
+                  className={`${linkBtn} min-h-[36px] text-sm font-bold`}
                 >
                   <span>Leer artículo</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             </article>
@@ -386,82 +400,77 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Modal 1: Ficha Técnica de la Línea de Investigación */}
+      {/* Modal 1: Ficha de la línea */}
       {selectedLine && (
         <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overscroll-contain"
+          className={overlay}
           onClick={() => setSelectedLine(null)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-line-title"
         >
-          <div
-            className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto overscroll-contain text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={`${modalBase} max-w-2xl`} onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
+              autoFocus
               onClick={() => setSelectedLine(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#0D5DD7]"
+              className={closeIconBtn}
               aria-label="Cerrar ficha de línea de investigación"
             >
-              <X className="w-5 h-5" aria-hidden="true" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <div className="pr-10 space-y-2">
+            <div className="space-y-2 pr-10">
               <div className="flex items-center gap-2 text-xs">
-                <span className="font-mono font-bold text-[#0D5DD7] bg-blue-50 px-2.5 py-1 rounded">
+                <span className={`${chipBlue} px-2.5 py-1 font-mono font-bold`}>
                   LÍNEA CIENTÍFICA
                 </span>
-                <span className="text-slate-600 font-semibold">{selectedLine.activeProjects} proyectos activos</span>
+                <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+                  {selectedLine.activeProjects} proyectos activos
+                </span>
               </div>
-              <h2 id="modal-line-title" className="font-serif text-2xl font-bold text-slate-900 leading-snug">
+              <h2
+                id="modal-line-title"
+                className="font-serif text-2xl font-semibold leading-snug text-slate-900 dark:text-white"
+              >
                 {selectedLine.title}
               </h2>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 space-y-5 text-sm text-slate-700">
+            <div className="mt-5 space-y-5 border-t border-slate-100 pt-4 text-sm text-slate-700 dark:border-ceted-line dark:text-slate-300">
               <div>
-                <strong className="block text-slate-900 font-bold mb-1.5 text-xs uppercase tracking-wider">
-                  Fundamentación y Eje Metodológico:
-                </strong>
-                <p className="leading-[1.75] text-[15px] sm:text-base text-slate-700">
+                <strong className={modalLabel}>Fundamentación y Eje Metodológico:</strong>
+                <p className="text-[15px] leading-[1.75] text-slate-700 dark:text-slate-300 sm:text-base">
                   {selectedLine.description}
                 </p>
               </div>
 
               <div>
-                <strong className="block text-slate-900 font-bold mb-1.5 text-xs uppercase tracking-wider">
-                  Descriptores y Áreas Temáticas:
-                </strong>
+                <strong className={modalLabel}>Descriptores y Áreas Temáticas:</strong>
                 <div className="flex flex-wrap gap-2">
                   {selectedLine.keyTopics.map((topic, i) => (
-                    <span
-                      key={i}
-                      className="text-xs text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-md"
-                    >
+                    <span key={i} className={`${tag} py-1.5`}>
                       {topic}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Proyectos vinculados a esta línea */}
               <div>
-                <strong className="block text-slate-900 font-bold mb-2 text-xs uppercase tracking-wider">
+                <strong className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
                   Proyectos Asociados a Esta Línea:
                 </strong>
                 <div className="space-y-2.5">
                   {RESEARCH_PROJECTS.filter((p) => p.lineId === selectedLine.id).map((p) => (
                     <div
                       key={p.id}
-                      className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+                      className="flex flex-col justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 p-3.5 dark:border-ceted-line dark:bg-ceted-navy sm:flex-row sm:items-center"
                     >
                       <div>
-                        <span className="font-serif font-bold text-slate-900 text-sm block">
+                        <span className="block font-serif text-sm font-semibold text-slate-900 dark:text-white">
                           {p.title}
                         </span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-slate-600 dark:text-slate-400">
                           Coordinador: {p.coordinator} · Estado: {p.status}
                         </span>
                       </div>
@@ -471,7 +480,7 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
                           setSelectedLine(null);
                           setSelectedProject(p);
                         }}
-                        className="text-xs font-semibold text-[#0D5DD7] hover:underline shrink-0"
+                        className={`${linkBtn} min-h-[36px] shrink-0 text-sm`}
                       >
                         Ver proyecto
                       </button>
@@ -480,11 +489,14 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              {/* Coordinador o líder */}
-              <div className="p-4 bg-blue-50/70 border border-blue-100 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex flex-col items-start justify-between gap-3 rounded-xl border border-blue-100 bg-blue-50/70 p-4 dark:border-blue-400/20 dark:bg-blue-400/10 sm:flex-row sm:items-center">
                 <div>
-                  <span className="text-xs text-slate-600 block">Líder Científico Responsable:</span>
-                  <span className="font-serif text-base font-bold text-slate-900">{selectedLine.leader}</span>
+                  <span className="block text-xs text-slate-600 dark:text-slate-400">
+                    Líder Científico Responsable:
+                  </span>
+                  <span className="font-serif text-base font-semibold text-slate-900 dark:text-white">
+                    {selectedLine.leader}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -492,20 +504,16 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
                     setSelectedLine(null);
                     onNavigate('claustro', undefined, selectedLine.leaderId);
                   }}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg transition-colors flex items-center gap-1.5 min-h-[38px]"
+                  className={primaryBtn}
                 >
-                  <UserCheck className="w-4 h-4" />
+                  <UserCheck className="h-4 w-4" aria-hidden="true" />
                   <span>Ver Currículum (CV)</span>
                 </button>
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setSelectedLine(null)}
-                className="px-5 py-2.5 text-xs font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg min-h-[44px]"
-              >
+            <div className="mt-6 flex justify-end border-t border-slate-100 pt-4 dark:border-ceted-line">
+              <button type="button" onClick={() => setSelectedLine(null)} className={primaryBtn}>
                 Cerrar Ficha
               </button>
             </div>
@@ -513,61 +521,66 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* Modal 2: Ficha Técnica del Proyecto de Investigación */}
+      {/* Modal 2: Ficha del proyecto */}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overscroll-contain"
+          className={overlay}
           onClick={() => setSelectedProject(null)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-project-title"
         >
-          <div
-            className="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto overscroll-contain text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={`${modalBase} max-w-xl`} onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
+              autoFocus
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#0D5DD7]"
+              className={closeIconBtn}
               aria-label="Cerrar ficha del proyecto"
             >
-              <X className="w-5 h-5" aria-hidden="true" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <div className="pr-10 space-y-2">
+            <div className="space-y-2 pr-10">
               <div className="flex items-center gap-2 text-xs">
-                <span className="font-mono text-slate-600 font-medium">{selectedProject.duration}</span>
-                <span className="text-xs font-bold text-[#0D5DD7] bg-blue-50 px-2.5 py-0.5 rounded border border-blue-100">
+                <span className="font-mono font-medium text-slate-600 dark:text-slate-400">
+                  {selectedProject.duration}
+                </span>
+                <span className={`${chipBlue} px-2.5 py-0.5 text-xs font-bold`}>
                   {selectedProject.status}
                 </span>
               </div>
-              <h2 id="modal-project-title" className="font-serif text-2xl font-bold text-slate-900 leading-snug">
+              <h2
+                id="modal-project-title"
+                className="font-serif text-2xl font-semibold leading-snug text-slate-900 dark:text-white"
+              >
                 {selectedProject.title}
               </h2>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 space-y-4 text-sm text-slate-700">
+            <div className="mt-5 space-y-4 border-t border-slate-100 pt-4 text-sm text-slate-700 dark:border-ceted-line dark:text-slate-300">
               <div>
-                <strong className="block text-slate-900 font-bold mb-1 text-xs uppercase tracking-wider">
-                  Alcance Territorial y Sectorial:
-                </strong>
-                <p className="text-slate-800 font-medium">{selectedProject.scope}</p>
+                <strong className={modalLabel}>Alcance Territorial y Sectorial:</strong>
+                <p className="font-medium text-slate-800 dark:text-slate-100">
+                  {selectedProject.scope}
+                </p>
               </div>
 
               <div>
-                <strong className="block text-slate-900 font-bold mb-1 text-xs uppercase tracking-wider">
-                  Resumen Ejecutivo del Proyecto:
-                </strong>
-                <p className="leading-[1.75] text-[15px] sm:text-base text-slate-700">
+                <strong className={modalLabel}>Resumen Ejecutivo del Proyecto:</strong>
+                <p className="text-[15px] leading-[1.75] text-slate-700 dark:text-slate-300 sm:text-base">
                   {selectedProject.abstract}
                 </p>
               </div>
 
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between gap-3">
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-ceted-line dark:bg-ceted-navy">
                 <div>
-                  <span className="text-xs text-slate-500 block">Coordinador Principal:</span>
-                  <span className="font-serif text-sm font-bold text-slate-900">{selectedProject.coordinator}</span>
+                  <span className="block text-xs text-slate-600 dark:text-slate-400">
+                    Coordinador Principal:
+                  </span>
+                  <span className="font-serif text-sm font-semibold text-slate-900 dark:text-white">
+                    {selectedProject.coordinator}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -575,20 +588,16 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
                     setSelectedProject(null);
                     onNavigate('claustro', undefined, selectedProject.coordinatorId);
                   }}
-                  className="px-3.5 py-2 text-xs font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg transition-colors flex items-center gap-1.5 min-h-[38px]"
+                  className={`${primaryBtn} shrink-0`}
                 >
-                  <User className="w-3.5 h-3.5" />
+                  <User className="h-4 w-4" aria-hidden="true" />
                   <span>Ver Perfil Docente</span>
                 </button>
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setSelectedProject(null)}
-                className="px-5 py-2.5 text-xs font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg min-h-[44px]"
-              >
+            <div className="mt-6 flex justify-end border-t border-slate-100 pt-4 dark:border-ceted-line">
+              <button type="button" onClick={() => setSelectedProject(null)} className={primaryBtn}>
                 Cerrar Ficha
               </button>
             </div>
@@ -596,43 +605,49 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* Modal 3: Lector de Artículo Científico */}
+      {/* Modal 3: Lector de artículo */}
       {selectedPost && (
         <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overscroll-contain"
+          className={overlay}
           onClick={() => setSelectedPost(null)}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="modal-post-title"
         >
-          <div
-            className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto overscroll-contain text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={`${modalBase} max-w-2xl`} onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
+              autoFocus
               onClick={() => setSelectedPost(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#0D5DD7]"
+              className={closeIconBtn}
               aria-label="Cerrar artículo"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <div className="pr-8 space-y-2">
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="font-bold text-[#0D5DD7]">{selectedPost.category}</span>
-                <span>·</span>
+            <div className="space-y-2 pr-8">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                <span className="font-bold text-ceted-blue dark:text-blue-300">
+                  {selectedPost.category}
+                </span>
+                <span aria-hidden="true">·</span>
                 <span>{selectedPost.date}</span>
-                <span>·</span>
+                <span aria-hidden="true">·</span>
                 <span>{selectedPost.readTime}</span>
               </div>
-              <h2 className="font-serif text-2xl font-bold text-slate-900">
+              <h2
+                id="modal-post-title"
+                className="font-serif text-2xl font-semibold text-slate-900 dark:text-white"
+              >
                 {selectedPost.title}
               </h2>
-              <p className="text-xs text-slate-600">Por {selectedPost.author} ({selectedPost.role})</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Por {selectedPost.author} ({selectedPost.role})
+              </p>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 space-y-3 text-sm sm:text-base text-slate-700 leading-[1.75]">
-              <p className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg font-medium text-slate-900 text-sm">
+            <div className="mt-5 space-y-3 border-t border-slate-100 pt-4 text-sm leading-[1.75] text-slate-700 dark:border-ceted-line dark:text-slate-300 sm:text-base">
+              <p className="rounded-lg border border-slate-200 bg-slate-50 p-3.5 text-sm font-medium text-slate-900 dark:border-ceted-line dark:bg-ceted-navy dark:text-slate-100">
                 {selectedPost.summary}
               </p>
               {selectedPost.content.map((c, i) => (
@@ -640,19 +655,14 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
               ))}
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setSelectedPost(null)}
-                className="px-5 py-2.5 text-xs font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg min-h-[44px]"
-              >
+            <div className="mt-6 flex justify-end border-t border-slate-100 pt-4 dark:border-ceted-line">
+              <button type="button" onClick={() => setSelectedPost(null)} className={primaryBtn}>
                 Cerrar Lectura
               </button>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

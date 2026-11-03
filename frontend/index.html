@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#06182C" media="(prefers-color-scheme: dark)" />
     <title>CETED | Centro de Estudios de Técnicas de Dirección</title>
     <meta name="description" content="Un centro de excelencia que piensa con usted. Formación ejecutiva, maestrías en Dirección, Marketing y Gestión de Proyectos, e impacto institucional." />
     <meta property="og:title" content="CETED | Centro de Estudios de Técnicas de Dirección" />
@@ -10,13 +13,26 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/assets/aistudio/CETED_b437d2ec.png" />
+    <script>
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('ceted-theme');
+          var dark =
+            stored === 'dark' ||
+            (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-[#F8FAFC] text-slate-800 antialiased selection:bg-[#0D5DD7] selection:text-white">
+  <body class="bg-[#F8FAFC] text-slate-800 antialiased selection:bg-[#0D5DD7] selection:text-white dark:bg-ceted-navy dark:text-slate-200">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

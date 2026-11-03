@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { MotionConfig, motion } from 'motion/react';
 import { PageId } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -79,37 +80,58 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800 antialiased font-sans">
-      {/* Navigation Bar */}
-      <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+    <MotionConfig reducedMotion="user">
+      <div className="flex min-h-screen flex-col bg-white font-sans text-slate-800 antialiased dark:bg-ceted-navy dark:text-slate-200">
+        {/* Enlace de salto para teclado y lectores de pantalla */}
+        <a
+          href="#main-content"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('main-content')?.focus();
+          }}
+          className="sr-only z-[60] rounded-lg bg-ceted-blue px-4 py-3 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus-visible:outline-white"
+        >
+          Saltar al contenido principal
+        </a>
 
-      {/* Main Pages */}
-      <main id="main-content" className="flex-1">
-        {currentPage === 'inicio' && <HomePage onNavigate={handleNavigate} />}
+        {/* Navigation Bar */}
+        <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
-        {currentPage === 'nosotros' && <AboutPage onNavigate={handleNavigate} />}
+        {/* Main Pages */}
+        <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+          <motion.div
+            key={currentPage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+          >
+            {currentPage === 'inicio' && <HomePage onNavigate={handleNavigate} />}
 
-        {currentPage === 'claustro' && (
-          <ClaustroPage initialFacultyId={activeFacultyId} onNavigate={handleNavigate} />
-        )}
+            {currentPage === 'nosotros' && <AboutPage onNavigate={handleNavigate} />}
 
-        {currentPage === 'servicios' && (
-          <ServicesPage
-            initialSubcategory={servicesInitialTab}
-            onNavigate={handleNavigate}
-            onOpenApply={handleOpenApply}
-          />
-        )}
+            {currentPage === 'claustro' && (
+              <ClaustroPage initialFacultyId={activeFacultyId} onNavigate={handleNavigate} />
+            )}
 
-        {currentPage === 'investigacion' && <ResearchPage onNavigate={handleNavigate} />}
+            {currentPage === 'servicios' && (
+              <ServicesPage
+                initialSubcategory={servicesInitialTab}
+                onNavigate={handleNavigate}
+                onOpenApply={handleOpenApply}
+              />
+            )}
 
-        {currentPage === 'contacto' && (
-          <ContactPage preselectedProgram={preselectedProgram} onNavigate={handleNavigate} />
-        )}
-      </main>
+            {currentPage === 'investigacion' && <ResearchPage onNavigate={handleNavigate} />}
 
-      {/* Academic Footer */}
-      <Footer onNavigate={handleNavigate} />
-    </div>
+            {currentPage === 'contacto' && (
+              <ContactPage preselectedProgram={preselectedProgram} onNavigate={handleNavigate} />
+            )}
+          </motion.div>
+        </main>
+
+        {/* Academic Footer */}
+        <Footer onNavigate={handleNavigate} />
+      </div>
+    </MotionConfig>
   );
 }

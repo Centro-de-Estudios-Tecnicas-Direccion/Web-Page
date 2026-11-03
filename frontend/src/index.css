@@ -1,27 +1,111 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --font-serif: "Source Serif 4", Georgia, Cambria, serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", serif;
+
+  /* Marca (modo claro): colores exactos del logo */
   --color-ceted-blue: #0D5DD7;
-  --color-ceted-hover: #094ab2;
+  --color-ceted-hover: #094AB2;
   --color-ceted-dark: #0A2540;
   --color-ceted-navy: #06182C;
+
+  /* Paleta derivada para modo oscuro */
+  --color-ceted-mid: #08213B;
+  --color-ceted-deep: #0E3158;
+  --color-ceted-line: #1B3E66;
+  --color-ceted-abyss: #040E1A;
+
+  --animate-fade-in: fade-in 180ms ease-out both;
+  --animate-pop-in: pop-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-slide-in-right: slide-in-right 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
-html {
-  font-family: var(--font-sans);
-  color-scheme: light;
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color-scheme: light;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  /* Foco accesible y visible en ambos modos */
+  :focus-visible {
+    outline: 2px solid var(--color-ceted-blue);
+    outline-offset: 2px;
+  }
+
+  .dark :focus-visible {
+    outline-color: #60a5fa;
+  }
 }
 
-/* Accessible focus styling */
-:focus-visible {
-  outline: 2px solid #1457bb;
-  outline-offset: 2px;
-}
-
-/* Smooth transitions */
+/* Transición suave reutilizable */
 .transition-smooth {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Respeto a la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

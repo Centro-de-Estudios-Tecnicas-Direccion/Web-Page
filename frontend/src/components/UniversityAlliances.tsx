@@ -3,100 +3,97 @@ import { INSTITUTIONAL_AFFILIATIONS } from '../data/cetedData';
 import { ExternalLink, ShieldCheck, Building2, Globe, Sparkles, BookOpen } from 'lucide-react';
 
 export const UniversityAlliances: React.FC = () => {
+  const iconClass = 'h-5 w-5 text-ceted-blue dark:text-blue-300';
+
   const getAffiliationIcon = (id: string) => {
     switch (id) {
       case 'uh':
-        return <Building2 className="w-5 h-5 text-[#0D5DD7]" aria-hidden="true" />;
+        return <Building2 className={iconClass} aria-hidden="true" />;
       case 'unesco':
-        return <Globe className="w-5 h-5 text-[#0D5DD7]" aria-hidden="true" />;
+        return <Globe className={iconClass} aria-hidden="true" />;
       case 'gti':
-        return <Sparkles className="w-5 h-5 text-[#0D5DD7]" aria-hidden="true" />;
+        return <Sparkles className={iconClass} aria-hidden="true" />;
       default:
-        return <BookOpen className="w-5 h-5 text-[#0D5DD7]" aria-hidden="true" />;
+        return <BookOpen className={iconClass} aria-hidden="true" />;
     }
   };
 
   return (
     <section
       aria-labelledby="affiliations-title"
-      className="py-16 bg-white border-t border-b border-slate-200"
+      className="border-y border-slate-200 bg-white py-20 dark:border-ceted-line dark:bg-ceted-navy"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-        
-        {/* Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0D5DD7] mb-2">
-            <ShieldCheck className="w-4 h-4" aria-hidden="true" />
+      <div className="mx-auto max-w-7xl px-4 text-left sm:px-6 lg:px-8">
+        {/* Encabezado */}
+        <div className="mb-12 max-w-3xl">
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-ceted-blue dark:text-blue-300">
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             <span>Marco Institucional y Redes Académicas</span>
           </div>
           <h2
             id="affiliations-title"
-            className="font-serif text-3xl sm:text-4xl font-bold text-[#0D5DD7] tracking-tight"
+            className="font-serif text-3xl font-semibold tracking-tight text-ceted-dark dark:text-white sm:text-4xl"
           >
             Respaldo Académico y Vínculos Institucionales
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-700 leading-[1.8]">
-            El CETED desarrolla su docencia de posgrado, consultoría e investigación con el aval 
+          <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+            El CETED desarrolla su docencia de posgrado, consultoría e investigación con el aval
             de la Universidad de La Habana y la articulación con la Cátedra UNESCO.
           </p>
         </div>
 
-        {/* Real Institutional Affiliations Grid from PDF */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {INSTITUTIONAL_AFFILIATIONS.map((item) => (
             <div
               key={item.id}
-              className="bg-white border-2 border-slate-200 hover:border-[#0D5DD7] rounded-xl p-6 transition-all shadow-xs flex flex-col justify-between group"
+              className="group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-xs transition duration-200 hover:-translate-y-0.5 hover:border-ceted-blue hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none dark:border-ceted-line dark:bg-ceted-dark dark:hover:border-blue-400"
             >
               <div className="space-y-4">
-                {/* Header of Card */}
                 <div className="flex items-start justify-between gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-blue-50 dark:border-blue-400/20 dark:bg-blue-400/10">
                     {getAffiliationIcon(item.id)}
                   </div>
-                  <span className="text-xs font-mono text-slate-600 uppercase tracking-wider text-right">
+                  <span className="text-right text-xs font-medium uppercase tracking-wider text-slate-600 dark:text-slate-400">
                     {item.roleBadge}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-slate-900 group-hover:text-[#0D5DD7] transition-colors leading-snug">
+                  <h3 className="font-serif text-xl font-semibold leading-snug text-slate-900 transition-colors group-hover:text-ceted-blue dark:text-white dark:group-hover:text-blue-300">
                     {item.name}
                   </h3>
-                  <span className="text-xs font-semibold text-[#0D5DD7] block mt-1">
+                  <span className="mt-1 block text-sm font-semibold text-ceted-blue dark:text-blue-300">
                     {item.role}
                   </span>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100">
-                  <p className="text-sm text-slate-700 leading-[1.7]">
+                <div className="border-t border-slate-100 pt-3 dark:border-ceted-line">
+                  <p className="text-sm leading-[1.7] text-slate-700 dark:text-slate-300">
                     {item.description}
                   </p>
                 </div>
               </div>
 
-              {/* Link / Action */}
               {item.url && (
-                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-medium text-slate-500">
+                <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-ceted-line">
+                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                     Portal Institucional
                   </span>
                   <a
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0D5DD7] hover:underline min-h-[36px] py-1"
+                    className="inline-flex min-h-[36px] items-center gap-1.5 py-1 text-sm font-semibold text-ceted-blue underline-offset-4 hover:underline dark:text-blue-300"
                     aria-label={`Sitio oficial de ${item.name}`}
                   >
                     <span>{item.urlText || 'Ver portal'}</span>
-                    <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
                 </div>
               )}
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

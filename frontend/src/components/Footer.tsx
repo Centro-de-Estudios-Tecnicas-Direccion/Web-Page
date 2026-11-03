@@ -7,6 +7,9 @@ interface FooterProps {
   onNavigate: (page: PageId, subTab?: string, facultyId?: string) => void;
 }
 
+const linkClass =
+  'min-h-[32px] rounded-sm py-1 text-left text-slate-300 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-white';
+
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -36,16 +39,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <footer className="bg-[#06182C] text-slate-300 border-t border-slate-800 text-sm text-left">
-      
-      {/* Main Footer Sitemap & Information */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
-          
-          {/* Identity & Slogan */}
-          <div className="lg:col-span-4 space-y-4">
+    <footer className="border-t border-slate-800 bg-ceted-navy text-left text-sm text-slate-300 dark:border-ceted-line dark:bg-ceted-abyss">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          {/* Identidad */}
+          <div className="space-y-4 lg:col-span-4">
             <div className="flex items-center gap-3">
-              <div className="bg-white rounded-lg p-1.5 flex items-center justify-center">
+              <div className="flex items-center justify-center rounded-lg bg-white p-1.5">
                 <img
                   src={CETED_INFO.logo}
                   alt="CETED"
@@ -54,79 +54,59 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 />
               </div>
               <div>
-                <span className="font-serif text-xl font-bold text-white block leading-tight">
+                <span className="block font-serif text-xl font-bold leading-tight text-white">
                   CETED
                 </span>
-                <span className="text-xs text-slate-400">
-                  {CETED_INFO.fullName}
-                </span>
+                <span className="text-xs text-slate-400">{CETED_INFO.fullName}</span>
               </div>
             </div>
 
-            <p className="font-serif text-base text-blue-200 font-medium">
-              "{CETED_INFO.slogan}"
-            </p>
+            <p className="font-serif text-base font-medium text-blue-200">"{CETED_INFO.slogan}"</p>
 
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-              Centro académico de posgrado dedicado al rigor, la toma de decisiones estratégicas 
+            <p className="max-w-sm text-sm leading-relaxed text-slate-400">
+              Centro académico de posgrado dedicado al rigor, la toma de decisiones estratégicas
               y la consultoría aplicada para el desarrollo social y organizacional.
             </p>
 
-            <div className="pt-2 text-xs space-y-1.5 text-slate-400">
+            <div className="space-y-2 pt-2 text-sm text-slate-400">
               <p className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#0D5DD7] shrink-0 mt-0.5" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 <span>{CETED_INFO.address}</span>
               </p>
               <p className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#0D5DD7] shrink-0" />
+                <Mail className="h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 <span>{CETED_INFO.emails.general}</span>
               </p>
               <p className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#0D5DD7] shrink-0" />
+                <Phone className="h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 <span>{CETED_INFO.phones[0]}</span>
               </p>
             </div>
           </div>
 
-          {/* Navegación del Centro */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+          {/* Navegación */}
+          <div className="space-y-3 lg:col-span-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-white">
               Navegación
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
+            </h3>
+            <ul className="space-y-1 text-sm">
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('inicio')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
-                >
+                <button type="button" onClick={() => onNavigate('inicio')} className={linkClass}>
                   Inicio
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('nosotros')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
-                >
+                <button type="button" onClick={() => onNavigate('nosotros')} className={linkClass}>
                   Sobre Nosotros
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('claustro')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
-                >
+                <button type="button" onClick={() => onNavigate('claustro')} className={linkClass}>
                   Claustro Docente
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('servicios')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
-                >
+                <button type="button" onClick={() => onNavigate('servicios')} className={linkClass}>
                   Servicios y Maestrías
                 </button>
               </li>
@@ -134,34 +114,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('investigacion')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
+                  className={linkClass}
                 >
                   Investigación y Cátedra
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('contacto')}
-                  className="hover:text-white transition-colors py-0.5 text-left"
-                >
+                <button type="button" onClick={() => onNavigate('contacto')} className={linkClass}>
                   Contacto y Ubicación
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Programas y Servicios */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+          {/* Servicios */}
+          <div className="space-y-3 lg:col-span-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-white">
               Servicios Académicos
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
+            </h3>
+            <ul className="space-y-1 text-sm">
               <li>
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'posgrado')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Maestría en Dirección
                 </button>
@@ -170,7 +146,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'posgrado')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Maestría en Marketing
                 </button>
@@ -179,7 +155,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'posgrado')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Maestría en Gestión de Proyectos
                 </button>
@@ -188,7 +164,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'pregrado')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Formación de Pregrado UH
                 </button>
@@ -197,7 +173,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'consultora')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Consultora GTI UH
                 </button>
@@ -206,7 +182,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <button
                   type="button"
                   onClick={() => onNavigate('servicios', 'gabinete')}
-                  className="hover:text-white transition-colors text-left"
+                  className={linkClass}
                 >
                   • Gabinete Metodológico
                 </button>
@@ -214,27 +190,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Enlaces a Universidades y Redes Académicas */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+          {/* Enlaces universitarios */}
+          <div className="space-y-3 lg:col-span-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-white">
               Enlaces Universitarios
-            </h4>
-            <ul className="space-y-2.5 text-xs">
+            </h3>
+            <ul className="space-y-3 text-sm">
               {universityLinks.map((link, idx) => (
                 <li key={idx}>
                   <a
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block hover:text-white transition-colors"
+                    className="group block rounded-sm transition-colors focus-visible:outline-white"
                   >
-                    <div className="flex items-center gap-1.5 text-slate-200 group-hover:text-white font-medium">
-                      <span>{link.name}</span>
-                      <ExternalLink className="w-3 h-3 text-[#0D5DD7] shrink-0" />
+                    <div className="flex items-center gap-1.5 font-medium text-slate-200 group-hover:text-white">
+                      <span className="underline-offset-4 group-hover:underline">{link.name}</span>
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-blue-400" aria-hidden="true" />
                     </div>
-                    <span className="text-[11px] text-slate-400 block">
-                      {link.desc}
-                    </span>
+                    <span className="block text-xs text-slate-400">{link.desc}</span>
                   </a>
                 </li>
               ))}
@@ -244,28 +218,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 onClick={scrollToTop}
-                className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors min-h-[40px]"
+                className="group inline-flex min-h-[44px] items-center gap-1.5 rounded-sm text-sm text-slate-300 transition-colors hover:text-white focus-visible:outline-white"
               >
-                <ArrowUp className="w-3.5 h-3.5" />
+                <ArrowUp
+                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
                 <span>Volver arriba</span>
               </button>
             </div>
           </div>
-
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        {/* Barra inferior */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 text-xs text-slate-400 dark:border-ceted-line sm:flex-row">
           <div>
-            © {new Date().getFullYear()} CETED. Centro de Estudios de Técnicas de Dirección — Universidad de La Habana.
+            © {new Date().getFullYear()} CETED. Centro de Estudios de Técnicas de Dirección —
+            Universidad de La Habana.
           </div>
 
-          <div className="flex items-center gap-2 text-slate-400">
-            <ShieldCheck className="w-4 h-4 text-[#0D5DD7]" />
+          <div className="flex items-center gap-2 text-slate-300">
+            <ShieldCheck className="h-4 w-4 text-blue-400" aria-hidden="true" />
             <span>Información Institucional Oficial Verificada</span>
           </div>
         </div>
-
       </div>
     </footer>
   );
