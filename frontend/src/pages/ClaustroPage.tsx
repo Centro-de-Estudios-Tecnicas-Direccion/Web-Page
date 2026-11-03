@@ -107,7 +107,7 @@ export const ClaustroPage: React.FC<ClaustroPageProps> = ({ initialFacultyId, on
             Claustro Docente
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-blue-50 dark:text-slate-300 sm:text-lg">
-            12 profesores, investigadores titulares y especialistas con amplia trayectoria directiva,
+            13 profesores, investigadores titulares y especialistas con amplia trayectoria directiva,
             doctorados internacionales y liderazgo en la ciencia de la dirección en Cuba.
           </p>
         </div>

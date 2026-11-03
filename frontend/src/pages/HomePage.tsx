@@ -391,7 +391,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               className={`group ${primaryBtn}`}
             >
               <UserCheck className="h-4 w-4" aria-hidden="true" />
-              <span>Ver Claustro Completo (12 Profesores)</span>
+              <span>Ver Claustro Completo (13 Profesores)</span>
               <ArrowRight
                 className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
                 aria-hidden="true"
