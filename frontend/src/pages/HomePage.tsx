@@ -34,12 +34,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
   };
 
+  // TEMPORIZADOR BLINDADO: Evita que se dupliquen los intervalos al cambiar de página
   useEffect(() => {
-    if (isPlaying) {
-      timerRef.current = setInterval(nextSlide, 5000);
+    if (isPlaying && HERO_SLIDES.length > 0) {
+      timerRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+      }, 5000);
     }
+    
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, [isPlaying]);
 
@@ -214,7 +221,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   </button>
                 </div>
 
-                {/* Indicador */}
+                {/* Indicador (Mejorado para que no diga "010" si hay 10 fotos) */}
                 <div className="absolute left-4 top-4 z-20 flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-3 py-1.5 text-xs font-medium text-white">
                   <button
                     type="button"
@@ -229,7 +236,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     )}
                   </button>
                   <span className="font-mono tabular-nums">
-                    0{currentSlide + 1} / 0{HERO_SLIDES.length}
+                    {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
                   </span>
                 </div>
               </div>

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { MotionConfig, motion } from 'motion/react';
+import { MotionConfig } from 'motion/react';
 import { PageId } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -99,12 +99,8 @@ export default function App() {
 
         {/* Main Pages */}
         <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-          >
+          {/* Reemplazado motion.div por un div normal para evitar que se quede invisible */}
+          <div>
             {currentPage === 'inicio' && <HomePage onNavigate={handleNavigate} />}
 
             {currentPage === 'nosotros' && <AboutPage onNavigate={handleNavigate} />}
@@ -126,7 +122,7 @@ export default function App() {
             {currentPage === 'contacto' && (
               <ContactPage preselectedProgram={preselectedProgram} onNavigate={handleNavigate} />
             )}
-          </motion.div>
+          </div>
         </main>
 
         {/* Academic Footer */}
