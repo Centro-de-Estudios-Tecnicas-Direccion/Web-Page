@@ -50,6 +50,16 @@ export interface UniversityPartner {
   url: string;
 }
 
+export interface InstitutionalAffiliation {
+  id: string;
+  name: string;
+  role: string;
+  roleBadge: string;
+  description: string;
+  url?: string;
+  urlText?: string;
+}
+
 export interface ServiceSubcategory {
   id: 'pregrado' | 'posgrado' | 'gabinete' | 'consultora';
   title: string;
@@ -87,9 +97,15 @@ export interface FacultyMember {
   bio: string;
   image: string;
   cvHighlights?: string[];
-  publicationsCount: number;
-  experienceYears: number;
+  publicationsCount?: number;
+  experienceYears?: number;
   email?: string;
+  orcid?: string;
+  linkedIn?: string;
+  publications?: string[];
+  ejesTematicos?: string[];
+  premios?: string[];
+  docencia?: string[];
 }
 
 export interface BlogPost {

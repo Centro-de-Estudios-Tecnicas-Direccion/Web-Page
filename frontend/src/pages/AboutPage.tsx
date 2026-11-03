@@ -111,9 +111,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             <h2 className="font-serif text-3xl font-bold text-[#0D5DD7] mt-1">
               Valores que Guían al CETED
             </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Seis pilares institucionales que orientan el quehacer pedagógico, científico y consultor del centro.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ABOUT_CETED.valores.map((val, idx) => (
               <div
                 key={idx}
@@ -139,16 +142,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
 
       {/* 03. HISTORIA DEL CETED (SOLID WHITE TIMELINE) */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mb-12">
+        <div className="max-w-3xl mb-10">
           <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-            Trayectoria Académica
+            Trayectoria Académica Institucional
           </span>
           <h2 className="font-serif text-3xl font-bold text-[#0D5DD7] mt-1">
-            Historia del Centro desde 1990
+            Nuestra Historia desde 1988
           </h2>
-          <p className="text-base text-slate-700 mt-2 leading-[1.7]">
-            Más de tres décadas dedicadas a la formación de directivos de excelencia e investigación de vanguardia.
-          </p>
+          <div className="mt-4 p-6 bg-slate-50 border-2 border-slate-200 rounded-xl text-base text-slate-700 leading-[1.8]">
+            <p>{ABOUT_CETED.historiaNarrativa}</p>
+          </div>
         </div>
 
         <div className="relative border-l-2 border-[#0D5DD7] ml-4 sm:ml-6 space-y-8 pl-6 sm:pl-8">

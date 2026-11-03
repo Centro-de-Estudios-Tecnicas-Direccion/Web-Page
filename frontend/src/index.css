@@ -16,7 +16,7 @@ html {
 
 /* Accessible focus styling */
 :focus-visible {
-  outline: 2px solid #0D5DD7;
+  outline: 2px solid #1457bb;
   outline-offset: 2px;
 }
 

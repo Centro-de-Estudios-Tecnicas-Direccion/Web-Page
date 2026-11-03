@@ -281,7 +281,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </p>
                 <div className="p-3.5 bg-white border border-slate-200 rounded-lg">
                   <span className="block font-bold text-slate-900">Correo directo:</span>
-                  <span className="text-[#0D5DD7] font-mono font-semibold">{CETED_INFO.emails.gabinete}</span>
+                  <span className="text-[#0D5DD7] font-mono font-semibold">{CETED_INFO.emails.general}</span>
                 </div>
                 <button
                   onClick={() => onNavigate('contacto')}
@@ -294,12 +294,12 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
           </div>
         )}
 
-        {/* CONSULTORA EN GESTIÓN */}
+        {/* CONSULTORA EN GESTIÓN (GTI) */}
         {activeTab === 'consultora' && (
           <div className="space-y-12">
             <div className="max-w-3xl">
               <span className="text-xs font-bold uppercase tracking-wider text-[#0D5DD7]">
-                Brazo de Consultoría Organizacional
+                Marca de Servicios de Consultoría Universidad de La Habana
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D5DD7] mt-1">
                 {SERVICES_DATA.consultora.title}
@@ -330,13 +330,16 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               <div className="lg:col-span-5 bg-[#0D5DD7] text-white rounded-xl p-8 space-y-6">
                 <div className="space-y-3">
                   <span className="text-xs font-bold uppercase tracking-wider text-blue-100">
-                    Trayectoria en Empresas
+                    Visión 2026 y Alianzas
                   </span>
                   <h3 className="font-serif text-2xl font-bold">
-                    Alianzas Estratégicas
+                    Aliado Estratégico Organizacional
                   </h3>
                   <p className="text-[15px] text-white/95 leading-[1.75]">
-                    {SERVICES_DATA.consultora.clients}
+                    {SERVICES_DATA.consultora.manifesto}
+                  </p>
+                  <p className="text-xs text-blue-100 pt-2 border-t border-white/20">
+                    <strong className="text-white">Alcance: </strong>{SERVICES_DATA.consultora.clients}
                   </p>
                 </div>
 

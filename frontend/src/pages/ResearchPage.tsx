@@ -281,20 +281,48 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onNavigate }) => {
             <div className="lg:col-span-4 bg-[#0D5DD7] text-white p-8 rounded-xl space-y-4 text-center">
               <Globe2 className="w-12 h-12 mx-auto text-white" />
               <h3 className="font-serif text-xl font-bold">
-                Sitio Web Cátedra UNESCO
+                Cátedra UNESCO & Redec
               </h3>
               <p className="text-xs text-white/95">
-                Acceda al portal internacional con publicaciones y actas oficiales de educación directiva:
+                Espacio digital oficial, canales de difusión y vinculación internacional en economías circulares:
               </p>
-              <a
-                href={EXTENSION_REDEC.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 text-xs font-bold text-[#0D5DD7] bg-white hover:bg-slate-100 rounded-lg transition-colors min-h-[44px]"
-              >
-                <span>Ir al Sitio Web Oficial</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
+              
+              <div className="space-y-2 pt-2">
+                <a
+                  href={EXTENSION_REDEC.linktree}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 text-xs font-bold text-[#0D5DD7] bg-white hover:bg-slate-100 rounded-lg transition-colors min-h-[44px]"
+                >
+                  <span>Portal Web Linktree Oficial</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+
+                <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+                  <a
+                    href={EXTENSION_REDEC.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-lg border border-white/40 hover:bg-white/10 text-white font-medium flex items-center justify-center gap-1 transition-colors"
+                  >
+                    <span>Facebook</span>
+                    <ExternalLink className="w-3 h-3 text-white/70" />
+                  </a>
+                  <a
+                    href={EXTENSION_REDEC.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-lg border border-white/40 hover:bg-white/10 text-white font-medium flex items-center justify-center gap-1 transition-colors"
+                  >
+                    <span>Instagram</span>
+                    <ExternalLink className="w-3 h-3 text-white/70" />
+                  </a>
+                </div>
+
+                <div className="pt-2 text-[11px] text-blue-100 border-t border-white/20 font-mono">
+                  <span>{EXTENSION_REDEC.email}</span> · <span>{EXTENSION_REDEC.phone}</span>
+                </div>
+              </div>
             </div>
 
           </div>

@@ -104,11 +104,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <div className="pt-4 border-t border-white/20 flex flex-wrap items-center justify-between gap-4 text-xs text-white">
                 <div className="flex items-center gap-3">
                   <a
-                    href={`mailto:${CETED_INFO.emails.admisiones}`}
+                    href={`mailto:${CETED_INFO.emails.general}`}
                     className="flex items-center gap-1.5 hover:underline py-1"
                   >
                     <Mail className="w-3.5 h-3.5 text-white" aria-hidden="true" />
-                    <span>{CETED_INFO.emails.admisiones}</span>
+                    <span>{CETED_INFO.emails.general}</span>
                   </a>
                   <span aria-hidden="true" className="text-white/40">·</span>
                   <span className="flex items-center gap-1.5 py-1">
@@ -345,66 +345,99 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 Nuestro Claustro de Profesores
               </h2>
               <p className="mt-3 text-base text-slate-700 max-w-2xl leading-relaxed">
-                Cuerpo académico integrado por doctores en ciencias e investigadores titulares 
-                con amplia trayectoria directiva. Haga clic en cualquiera de ellos para consultar su trayectoria y CV.
+                Cuerpo académico integrado por doctores en ciencias e investigadores con amplia trayectoria directiva. 
+                A continuación presentamos 4 de nuestros profesores destacados. Para consultar el claustro completo y todos los currículums, acceda a la sección especializada.
               </p>
             </div>
 
             <button
               type="button"
               onClick={() => onNavigate('claustro')}
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg transition-colors shrink-0 min-h-[44px]"
+              className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-[#0D5DD7] hover:bg-[#094ab2] rounded-lg transition-colors shrink-0 min-h-[46px] shadow-xs"
             >
               <UserCheck className="w-4 h-4" />
-              <span>Ver Claustro Completo y Currículums</span>
+              <span>Ver Claustro Completo (12 Profesores)</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Tarjetas de profesores */}
+          {/* Tarjetas de 4 profesores destacados (Diseño UI/UX compacto con avatares elegantes) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {FACULTY_MEMBERS_FULL.map((prof) => (
+            {FACULTY_MEMBERS_FULL.slice(0, 4).map((prof) => (
               <div
                 key={prof.id}
-                className="bg-white border-2 border-slate-200 hover:border-[#0D5DD7] rounded-xl overflow-hidden shadow-xs transition-all flex flex-col justify-between"
+                className="bg-white border border-slate-200 hover:border-[#0D5DD7] rounded-xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between text-left group"
               >
                 <div>
-                  <div className="aspect-square w-full bg-slate-100 overflow-hidden relative">
-                    <img
-                      src={prof.image}
-                      alt={prof.name}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute top-2 right-2 bg-white text-[#0D5DD7] text-[10px] font-bold px-2 py-0.5 rounded border border-slate-200">
-                      PhD / Doctor
+                  {/* Categoría académica y años de experiencia */}
+                  <div className="flex items-center justify-between gap-2 mb-3.5">
+                    <span className="bg-blue-50 text-[#0D5DD7] border border-blue-100 font-semibold px-2 py-0.5 rounded text-[11px] uppercase tracking-wider">
+                      {prof.role.includes('Mérito')
+                        ? 'Prof. de Mérito'
+                        : prof.degree.includes('Doctor')
+                        ? 'Dr. en Ciencias'
+                        : prof.degree.includes('Máster')
+                        ? 'M.Sc.'
+                        : 'Prof. Titular'}
+                    </span>
+                    {prof.experienceYears && (
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        {prof.experienceYears} años exp.
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Foto compacta en avatar y nombre */}
+                  <div className="flex items-center gap-3.5 mb-3.5">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-100 border-2 border-slate-200 group-hover:border-[#0D5DD7] shrink-0 transition-colors shadow-xs">
+                      <img
+                        src={prof.image}
+                        alt={`Foto de ${prof.name}`}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-[#0D5DD7] transition-colors leading-snug">
+                        {prof.name}
+                      </h3>
+                      <p className="text-[11px] font-semibold text-[#0D5DD7] truncate mt-0.5">
+                        {prof.role.split('|')[0].trim()}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-serif text-lg font-bold text-slate-900 leading-snug">
-                      {prof.name}
-                    </h3>
-                    <p className="text-xs font-semibold text-[#0D5DD7]">
-                      {prof.role}
-                    </p>
-                    <p className="text-xs text-slate-600 line-clamp-2">
+                  {/* Especialidad descriptiva */}
+                  <div className="border-t border-slate-100 pt-3 space-y-1">
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                      <strong className="text-slate-800">Especialidad: </strong>
                       {prof.specialty}
                     </p>
                   </div>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="mt-5 pt-3 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => onNavigate('claustro', undefined, prof.id)}
-                    className="w-full py-2.5 px-3 text-xs font-semibold text-[#0D5DD7] hover:bg-blue-50 border border-[#0D5DD7] rounded-lg transition-colors min-h-[40px]"
+                    className="w-full py-2.5 px-3 text-xs font-semibold text-[#0D5DD7] group-hover:bg-[#0D5DD7] group-hover:text-white border border-[#0D5DD7] rounded-lg transition-colors flex items-center justify-center gap-1.5 min-h-[38px]"
                   >
-                    Consultar Ficha y CV
+                    <span>Consultar Perfil y CV</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Pie de sección informativo sin botón duplicado */}
+          <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <p>
+              Presentando 4 miembros destacados. El cuerpo docente oficial completo está compuesto por 12 especialistas, doctores e investigadores titulares.
+            </p>
+            <span className="text-[#0D5DD7] font-semibold shrink-0">
+              Universidad de La Habana · Edificio Julio Antonio Mella
+            </span>
           </div>
 
         </div>

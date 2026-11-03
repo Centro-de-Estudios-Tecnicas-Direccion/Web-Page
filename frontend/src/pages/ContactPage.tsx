@@ -311,15 +311,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({
               </span>
               <div className="space-y-2 text-xs font-mono text-slate-700">
                 <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-                  <span>General:</span>
+                  <span>CETED Dirección:</span>
                   <a href={`mailto:${CETED_INFO.emails.general}`} className="text-[#0D5DD7] font-semibold hover:underline">
                     {CETED_INFO.emails.general}
                   </a>
                 </div>
                 <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-                  <span>Admisiones:</span>
-                  <a href={`mailto:${CETED_INFO.emails.admisiones}`} className="text-[#0D5DD7] font-semibold hover:underline">
-                    {CETED_INFO.emails.admisiones}
+                  <span>Cátedra UNESCO:</span>
+                  <a href={`mailto:${CETED_INFO.emails.unesco}`} className="text-[#0D5DD7] font-semibold hover:underline">
+                    {CETED_INFO.emails.unesco}
                   </a>
                 </div>
               </div>
