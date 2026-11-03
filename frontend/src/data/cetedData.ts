@@ -8,21 +8,33 @@ import { FACULTY_MEMBERS_FULL } from './cetedFullData';
 export const HERO_SLIDES = [
   {
     id: 'slide-1',
-    image: '/src/assets/images/hero_ceted_executive_class_1793301385890.jpg',
-    caption: 'Sesión académica de posgrado en técnicas de dirección',
-    subcaption: 'Formación de directivos con enfoque analítico, participativo y de alta responsabilidad social',
+    image: '/assets/images/hero_1.JPG',
+    caption: 'Seamos realistas y hagamos lo imposible',
+    subcaption: 'Filosofía institucional y visión transformadora del CETED',
   },
   {
     id: 'slide-2',
-    image: '/src/assets/images/hero_ceted_collaborative_workshop_1793301387230.jpg',
-    caption: 'Metodologías de consultoría e intervención organizacional',
-    subcaption: 'Acompañamiento a cuadros y colectivos directivos en la resolución de problemas complejos',
+    image: '/assets/images/hero_2.JPG', 
+    caption: 'Claustro y equipo de trabajo del CETED',
+    subcaption: 'Un colectivo comprometido con la excelencia académica y la investigación',
   },
   {
     id: 'slide-3',
-    image: '/src/assets/images/hero_ceted_case_discussion_1793301387437.jpg',
-    caption: 'Intercambio científico y debate directivo',
-    subcaption: 'Análisis de competencias laborales, liderazgo y gestión estratégica en organizaciones cubanas',
+    image: '/assets/images/hero_3.JPG', 
+    caption: 'Sesión académica y análisis de casos',
+    subcaption: 'Participación activa de directivos y estudiantes en el aula',
+  },
+  {
+    id: 'slide-4',
+    image: '/assets/images/hero_4.JPG',
+    caption: 'Intercambio directivo y debate académico',
+    subcaption: 'Profesores y expertos compartiendo experiencias en tiempo real',
+  },
+  {
+    id: 'slide-5',
+    image: '/assets/images/hero_5.JPG', 
+    caption: 'Exposiciones y conferencias de alto nivel',
+    subcaption: 'Vinculación de la teoría con la práctica en la resolución de problemas',
   },
 ];
 
