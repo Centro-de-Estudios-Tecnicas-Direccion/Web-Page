@@ -14,9 +14,197 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   onNavigate,
   onOpenApply,
 }) => {
+  /* Datos de pregrado extraídos de "Solicitudes de servicios.xlsx" */
+  const PREGRADO_PROGRAMAS: {
+    id: string;
+    nombre: string;
+    materias: { asignatura: string; año: string; periodo: string; horas: number }[];
+  }[] = [
+    {
+      id: 'matcom',
+      nombre: 'Matemática y Computación',
+      materias: [
+        { asignatura: 'Matemática Superior I', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Matemática Superior II', año: '1ro', periodo: '2do PERIODO', horas: 60 },
+      ],
+    },
+    {
+      id: 'ffh',
+      nombre: 'Filosofía e Historia',
+      materias: [
+        { asignatura: 'Filosofía', año: '1ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Teoría Política', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Historia de Cuba', año: '1ro', periodo: '1er PERIODO', horas: 56 },
+        { asignatura: 'Teoría Política', año: '4to', periodo: '1er PERIODO', horas: 28 },
+        { asignatura: 'Fundamentos de la construcción del Socialismo en Cuba I', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Fundamentos de la construcción del Socialismo en Cuba II', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+      ],
+    },
+    {
+      id: 'fec',
+      nombre: 'Economía',
+      materias: [
+        { asignatura: 'Economía Política I', año: '1ro', periodo: '1er PERIODO', horas: 72 },
+        { asignatura: 'Pensamiento Económico Universal', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Estadística Matemática', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Principios de Macro y Microeconomía', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Estudios Económicos Cubanos', año: '4to', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Economía Política II', año: '1ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Investigación de Operaciones', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Econometría', año: '2do', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Estadística Aplicada', año: '1ro', periodo: '1er PERIODO', horas: 92 },
+      ],
+    },
+    {
+      id: 'derecho',
+      nombre: 'Derecho',
+      materias: [
+        { asignatura: 'Derecho', año: '1ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Derecho Constitucional', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Derecho Mercantil y Laboral', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Elementos del Derecho', año: '2do', periodo: '1er PERIODO', horas: 50 },
+      ],
+    },
+    {
+      id: 'ciei',
+      nombre: 'Centro de Investigaciones de Economía Internacional',
+      materias: [
+        { asignatura: 'Economía Internacional', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+      ],
+    },
+    {
+      id: 'defensa',
+      nombre: 'Departamento de Defensa',
+      materias: [
+        { asignatura: 'Seguridad Nacional', año: '3ro', periodo: '1er PERIODO', horas: 0 },
+        { asignatura: 'Defensa Nacional', año: '3ro', periodo: '1er PERIODO', horas: 0 },
+        { asignatura: 'Fundamentos básicos de la Preparación para la Defensa', año: '2do', periodo: '1er PERIODO', horas: 36 },
+        { asignatura: 'Fundamentos básicos de la Preparación para la Defensa', año: '1ro', periodo: '1er PERIODO', horas: 36 },
+      ],
+    },
+    {
+      id: 'seder',
+      nombre: 'SEDER',
+      materias: [
+        { asignatura: 'Educación Física I', año: '1ro', periodo: '1er PERIODO', horas: 28 },
+        { asignatura: 'Educación Física III', año: '2do', periodo: '1er PERIODO', horas: 28 },
+        { asignatura: 'Educación Física II', año: '1ro', periodo: '1er PERIODO', horas: 28 },
+        { asignatura: 'Educación Física IV', año: '2do', periodo: '1er PERIODO', horas: 28 },
+      ],
+    },
+    {
+      id: 'ceted',
+      nombre: 'Centro de Estudios de Técnicas de Dirección',
+      materias: [
+        { asignatura: 'Administración General', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Administración Estratégica', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Metodología de la Investigación Científica', año: '3ro', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Optativa III', año: '4to', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Optativa IV', año: '4to', periodo: '1er PERIODO', horas: 32 },
+        { asignatura: 'Marketing I', año: '1ro', periodo: '1er PERIODO', horas: 90 },
+        { asignatura: 'Negociación', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Administración de Empresas I', año: '2do', periodo: '1er PERIODO', horas: 50 },
+        { asignatura: 'Comunicación Comercial II', año: '2do', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Marketing II', año: '1ro', periodo: '1er PERIODO', horas: 90 },
+        { asignatura: 'Comunicación Comercial I', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Metodología de la Investigación Científica', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Administración de Empresas II', año: '2do', periodo: '1er PERIODO', horas: 40 },
+        { asignatura: 'Calidad y Protección al Consumidor', año: '2do', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Elementos de Dirección', año: '2do', periodo: '1er PERIODO', horas: 50 },
+      ],
+    },
+    {
+      id: 'contabilidad',
+      nombre: 'Departamento de Contabilidad y Auditoría',
+      materias: [
+        { asignatura: 'Contabilidad General I', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Contabilidad General III', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Contabilidad Superior', año: '3ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Auditoría Financiera', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Auditoría de Gestión', año: '4to', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Sistema de Control Interno', año: '4to', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Optativa I', año: '3ro', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Optativa II', año: '3ro', periodo: '1er PERIODO', horas: 32 },
+        { asignatura: 'Optativa III', año: '4to', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Contabilidad General II', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Contabilidad General IV', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Auditoría', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Contabilidad Gubernamental', año: '3ro', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Contabilidad I', año: '1ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Análisis de los Estados Financieros', año: '2do', periodo: '1er PERIODO', horas: 40 },
+        { asignatura: 'Contabilidad II', año: '1ro', periodo: '1er PERIODO', horas: 70 },
+        { asignatura: 'Fundamentos de Contabilidad I', año: '1ro', periodo: '1er PERIODO', horas: 100 },
+        { asignatura: 'Elementos de Control Interno', año: '1ro', periodo: '1er PERIODO', horas: 100 },
+        { asignatura: 'Análisis de Estados Financieros', año: '2do', periodo: '1er PERIODO', horas: 70 },
+        { asignatura: 'Procedimientos y Técnicas de Auditoría II', año: '2do', periodo: '1er PERIODO', horas: 110 },
+        { asignatura: 'Fundamentos de Contabilidad II', año: '1ro', periodo: '1er PERIODO', horas: 100 },
+        { asignatura: 'Procedimientos y Técnicas de Auditoría I', año: '1ro', periodo: '1er PERIODO', horas: 120 },
+        { asignatura: 'Fundamentos de Contabilidad Gubernamental', año: '2do', periodo: '1er PERIODO', horas: 90 },
+      ],
+    },
+    {
+      id: 'finanzas',
+      nombre: 'Departamento de Finanzas',
+      materias: [
+        { asignatura: 'Sistema Financiero', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Matemática Financiera', año: '1ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Gestión del Riesgo Financiero Internacional', año: '3ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Administración Financiera Estratégica', año: '4to', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Optativa III', año: '4to', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Optativa IV', año: '4to', periodo: '1er PERIODO', horas: 32 },
+        { asignatura: 'Finanzas Gubernamentales', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Administración Financiera Operativa', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Preparación EEE Finanzas', año: '4to', periodo: '1er PERIODO', horas: 10 },
+      ],
+    },
+    {
+      id: 'costos',
+      nombre: 'Departamento de Costos y Sistema (Costos)',
+      materias: [
+        { asignatura: 'Contabilidad de Gestión I', año: '2do', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Costos para la Toma de Decisiones', año: '3ro', periodo: '1er PERIODO', horas: 60 },
+        { asignatura: 'Precios', año: '3ro', periodo: '1er PERIODO', horas: 30 },
+        { asignatura: 'Optativa I', año: '3ro', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Optativa II', año: '3ro', periodo: '1er PERIODO', horas: 32 },
+        { asignatura: 'Optativa III', año: '4to', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Contabilidad de Gestión II', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Preparación EEE Costos', año: '4to', periodo: '1er PERIODO', horas: 10 },
+        { asignatura: 'Elementos de Costo', año: '2do', periodo: '1er PERIODO', horas: 90 },
+      ],
+    },
+    {
+      id: 'sistema',
+      nombre: 'Departamento de Costos y Sistema (Sistema)',
+      materias: [
+        { asignatura: 'Sistemas Automatizados de Contabilidad', año: '4to', periodo: '1er PERIODO', horas: 42 },
+        { asignatura: 'Informática para la Gestión', año: '2do', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Auditoría asistida por la Informática', año: '4to', periodo: '1er PERIODO', horas: 36 },
+        { asignatura: 'Sistemas de Información para el Contador', año: '3ro', periodo: '1er PERIODO', horas: 48 },
+        { asignatura: 'Tecnología de la Comunicación y la Información', año: '2do', periodo: '1er PERIODO', horas: 40 },
+        { asignatura: 'Elementos de los Sistemas de Información', año: '2do', periodo: '1er PERIODO', horas: 90 },
+      ],
+    },
+  ];
+
   const [activeTab, setActiveTab] = useState<'pregrado' | 'posgrado' | 'gabinete' | 'consultora'>(
     initialSubcategory
   );
+  const [activeProgram, setActiveProgram] = useState(PREGRADO_PROGRAMAS[0].id);
+  const [filtroAño, setFiltroAño] = useState('todos');
+  const [filtroPeriodo, setFiltroPeriodo] = useState('todos');
+
+  const años = Array.from(new Set(PREGRADO_PROGRAMAS.flatMap((p) => p.materias.map((m) => m.año))));
+  const periodos = Array.from(
+    new Set(PREGRADO_PROGRAMAS.flatMap((p) => p.materias.map((m) => m.periodo)))
+  );
+  const programa = PREGRADO_PROGRAMAS.find((p) => p.id === activeProgram);
+  const materias = programa
+    ? programa.materias.filter(
+        (m) =>
+          (filtroAño === 'todos' || m.año === filtroAño) &&
+          (filtroPeriodo === 'todos' || m.periodo === filtroPeriodo)
+      )
+    : [];
 
   const subcategories: {
     id: 'pregrado' | 'posgrado' | 'gabinete' | 'consultora';
@@ -107,58 +295,118 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             role="tabpanel"
             id="panel-pregrado"
             aria-labelledby="tab-pregrado"
-            className="animate-fade-in space-y-12 motion-reduce:animate-none"
+            className="animate-fade-in space-y-10 motion-reduce:animate-none"
           >
             <div className="max-w-3xl">
               <span className={eyebrow}>Formación Curricular Inicial</span>
-              <h2 className={h2}>{SERVICES_DATA.pregrado.title}</h2>
-              <p className={subtitle}>"{SERVICES_DATA.pregrado.subtitle}"</p>
-              <p className={lead}>{SERVICES_DATA.pregrado.description}</p>
+              <h2 className={h2}>Asignaturas de Pregrado</h2>
             </div>
 
-            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-              <div className={`space-y-6 p-8 lg:col-span-7 ${panel}`}>
-                <h3 className="font-serif text-2xl font-semibold text-slate-900 dark:text-white">
-                  Asignaturas y Prácticas de Dirección
-                </h3>
-                <div className="space-y-3.5">
-                  {SERVICES_DATA.pregrado.features.map((feat, idx) => (
-                    <div key={idx} className={row}>
-                      <Check className={checkIcon} aria-hidden="true" />
-                      <span className={rowText}>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-1.5 rounded-xl border border-blue-100 bg-blue-50/70 p-5 text-sm text-slate-800 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-slate-200 sm:text-[15px]">
-                  <strong className="block text-base font-semibold text-ceted-blue dark:text-blue-300">
-                    Público Destinatario:
-                  </strong>
-                  <p className="leading-[1.7] text-slate-700 dark:text-slate-300">
-                    {SERVICES_DATA.pregrado.audience}
-                  </p>
-                </div>
-              </div>
-
-              <div className={`space-y-5 p-8 lg:col-span-5 ${panel}`}>
-                <h3 className="font-serif text-xl font-semibold text-slate-900 dark:text-white">
-                  Seminarios y Talleres Prácticos
-                </h3>
-                <p className="text-[15px] leading-[1.75] text-slate-700 dark:text-slate-300 sm:text-base">
-                  Los estudiantes universitarios acceden a talleres prácticos de resolución de conflictos,
-                  negociación y comunicación directiva impartidos por el claustro de CETED, preparándolos para la gestión real.
-                </p>
-
-                <div className="pt-2">
+            {/* Tabs de programas */}
+            <div
+              role="tablist"
+              aria-label="Programas de pregrado"
+              className="mt-6 grid max-w-3xl grid-cols-2 gap-2 rounded-xl border border-slate-200 bg-white p-1 dark:border-ceted-line dark:bg-ceted-navy sm:grid-cols-4"
+            >
+              {PREGRADO_PROGRAMAS.map((p) => {
+                const isSelected = activeProgram === p.id;
+                return (
                   <button
+                    key={p.id}
                     type="button"
-                    onClick={() => onNavigate('contacto')}
-                    className={`${primaryBtn} min-h-[48px]`}
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setActiveProgram(p.id)}
+                    className={`flex min-h-[44px] items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition-all duration-150 active:scale-[0.98] motion-reduce:active:scale-100 ${
+                      isSelected
+                        ? 'bg-ceted-blue text-white shadow-sm'
+                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-ceted-deep dark:hover:text-white'
+                    }`}
                   >
-                    Consultar Asignaturas de Pregrado
+                    {p.nombre}
                   </button>
+                );
+              })}
+            </div>
+
+            {/* Filtro por año o período */}
+            <div className="mt-8 flex max-w-3xl items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-ceted-line dark:bg-ceted-navy">
+              <img
+                src={CETED_INFO.logo}
+                alt="CETED"
+                className="h-8 w-8 shrink-0 rounded"
+                aria-hidden="true"
+              />
+              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Año
+              </label>
+              <select
+                value={filtroAño}
+                onChange={(e) => setFiltroAño(e.target.value)}
+                className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-ceted-blue dark:border-ceted-line dark:bg-ceted-deep dark:text-slate-200"
+              >
+                <option value="todos">Todos</option>
+                {años.map((a) => (
+                  <option key={a} value={a}>
+                    {a}
+                  </option>
+                ))}
+              </select>
+              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Período
+              </label>
+              <select
+                value={filtroPeriodo}
+                onChange={(e) => setFiltroPeriodo(e.target.value)}
+                className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-ceted-blue dark:border-ceted-line dark:bg-ceted-deep dark:text-slate-200"
+              >
+                <option value="todos">Todos</option>
+                {periodos.map((per) => (
+                  <option key={per} value={per}>
+                    {per}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Listado de asignaturas */}
+            <div className="mt-6 space-y-2">
+              {materias.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-ceted-line dark:bg-ceted-navy"
+                >
+                  <span className="text-[15px] font-medium text-slate-800 dark:text-slate-200">
+                    {m.asignatura}
+                  </span>
+                  <span className="text-[13px] text-slate-500 dark:text-slate-400">· {m.año}</span>
+                  <span className="text-[13px] text-slate-500 dark:text-slate-400">
+                    · {m.periodo}
+                  </span>
+                  <span className="ml-auto text-[13px] font-semibold text-slate-500 dark:text-slate-400">
+                    {m.horas} h
+                  </span>
                 </div>
-              </div>
+              ))}
+              {materias.length === 0 && (
+                <p className="text-slate-500 dark:text-slate-400">
+                  No hay asignaturas con esos filtros.
+                </p>
+              )}
+            </div>
+
+            {/* Contacto */}
+            <div className="mt-10 flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-ceted-line dark:bg-ceted-navy">
+              <p className="text-slate-700 dark:text-slate-300">
+                Si requiere más información, póngase en contacto con nosotros.
+              </p>
+              <button
+                type="button"
+                onClick={() => onNavigate('contacto')}
+                className={primaryBtn}
+              >
+                Contáctenos
+              </button>
             </div>
           </div>
         )}
